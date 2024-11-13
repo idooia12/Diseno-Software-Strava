@@ -112,5 +112,9 @@ public class UsuarioEntity {
 	}
 	
 	
+	public UsuarioEntity find(String nombre) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
