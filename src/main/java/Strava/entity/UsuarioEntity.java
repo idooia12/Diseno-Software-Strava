@@ -105,4 +105,12 @@ public class UsuarioEntity {
 		
 		return false;
 	}
+
+	public static Object getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
 }
