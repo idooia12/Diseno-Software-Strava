@@ -1,7 +1,12 @@
 package Strava.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
+import Strava.entity.Deporte;
 
 public class RetoDTO implements Serializable {
 
@@ -10,7 +15,7 @@ public class RetoDTO implements Serializable {
 		private String fechaInicio;
 		private String fechaFin;
 		private int objetivo;
-		private String deporte;
+		private Set<Integer> deportes = new HashSet<>();
 		
 		public String getNombre() {
 			return nombre;
@@ -44,23 +49,23 @@ public class RetoDTO implements Serializable {
 			this.objetivo = objetivo;
 		}
 		
-		public String getDeporte() {
-			return deporte;
+		public Set<Integer> getDeporte() {
+			return deportes;
 		}
 		
 		public void setDeporte(String deporte) {
-			this.deporte = deporte;
+			this.deportes = deportes;
 		}
 		
 		@Override
 		public String toString() {
 			return "RetoDTO [nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
-					+ ", objetivo=" + objetivo + ", deporte=" + deporte + "]";
+					+ ", objetivo=" + objetivo + ", deporte=" + deportes + "]";
 		}
 		
 		@Override
 		public int hashCode() {
-            return Objects.hash(deporte, fechaFin, fechaInicio, nombre, objetivo);
+            return Objects.hash(deportes, fechaFin, fechaInicio, nombre, objetivo);
         }
 		
 		@Override
@@ -72,7 +77,7 @@ public class RetoDTO implements Serializable {
             if (getClass() != obj.getClass())
                 return false;
             RetoDTO other = (RetoDTO) obj;
-            return Objects.equals(deporte, other.deporte) && Objects.equals(fechaFin, other.fechaFin)
+            return Objects.equals(deportes, other.deportes) && Objects.equals(fechaFin, other.fechaFin)
                     && Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(nombre, other.nombre)
                     && objetivo == other.objetivo;
 		}
