@@ -22,6 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'	
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Ejemplo de otra dependencia
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework:spring-web:5.3.30'
 	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	
@@ -30,3 +32,12 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+
+// Para evitar conflictos con Jakarta y javax
+configurations.all {
+    resolutionStrategy {
+        force 'org.springframework:spring-web:5.3.30' // Asegúrate de usar versiones compatibles
+    }
+}
+
