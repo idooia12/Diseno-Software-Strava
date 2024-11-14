@@ -1,8 +1,7 @@
 package Strava.facade;
 
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.ArrayList;import java.util.Date;
 import java.util.List;
 
 import Strava.entity.Deporte;
@@ -75,6 +74,9 @@ public class RetoController {
     private RetoDTO retoToDTO(RetoEntity reto) {
         return AssemblerMethods.retoToDTO(reto);
     }
+    
+    
+
 }
 
 
