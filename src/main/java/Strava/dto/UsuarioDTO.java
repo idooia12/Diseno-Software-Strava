@@ -9,12 +9,8 @@ import Strava.entity.SesionEntrenamientoEntity;
 public class UsuarioDTO {
 	private String email;
 	private String nombre;
-<<<<<<< HEAD
 	private String contraseña;
-	private String fechaNacimiento;
-=======
 	private Date fechaNacimiento;
->>>>>>> branch 'master' of git@github.com:idooia12/Diseno-Software-Strava.git
 	private int peso;
 	private int altura;
 	private int FCmax_ppm;
@@ -37,17 +33,13 @@ public class UsuarioDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-<<<<<<< HEAD
 	public String getContraseña() {
 		return contraseña;
 	}
 	public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
 	}
-	public String getFechaNacimiento() {
-=======
 	public Date getFechaNacimiento() {
->>>>>>> branch 'master' of git@github.com:idooia12/Diseno-Software-Strava.git
 		return fechaNacimiento;
 	}
 	public void setFechaNacimiento(Date fechaNacimiento) {
@@ -77,8 +69,6 @@ public class UsuarioDTO {
 	public void setFCrep_ppm(int fCrep_ppm) {
 		FCrep_ppm = fCrep_ppm;
 	}
-<<<<<<< HEAD
-=======
 	public List<RetoEntity> getRetosCreados() {
 		return retosCreados;
 	}
@@ -103,5 +93,4 @@ public class UsuarioDTO {
 	public void setEntrenamientos(List<SesionEntrenamientoEntity> entrenamientos) {
 		this.entrenamientos = entrenamientos;
 	}
->>>>>>> branch 'master' of git@github.com:idooia12/Diseno-Software-Strava.git
 }
