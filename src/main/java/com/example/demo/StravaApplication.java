@@ -8,6 +8,7 @@ public class StravaApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StravaApplication.class, args);
+		System.out.println("Hola mundo");
 	}
 
 }
