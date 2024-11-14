@@ -85,4 +85,5 @@ public class SesionEntrenamientoEntity {
 		return "SesionEntrenamientoEntity [titulo=" + titulo + ", deporte=" + deporte + ", distanciaKm=" + distanciaKm
 				+ ", Fecha_inicio=" + fechaInicio + ", Hora_inicio=" + horaInicio + ", duracion=" + duracion + "]";
 	}
+	
 }

@@ -11,8 +11,12 @@ import Strava.entity.UsuarioEntity;
 public class EntrenamientoService {
 	
 	private static EntrenamientoService instance;
+    private List<SesionEntrenamientoEntity> entrenamientos;
+
 	
-	private EntrenamientoService() {}
+	 private EntrenamientoService() {
+	        entrenamientos = new ArrayList<>(); // Inicializamos la lista
+	 }
 	
 	public void crearEntrenamiento(UsuarioEntity user, String titulo, String deporte, Date inicio, int duracion) throws RemoteException {
 		SesionEntrenamientoEntity sesion = new SesionEntrenamientoEntity();
@@ -31,5 +35,11 @@ public class EntrenamientoService {
 
 		return instance;
 	}
+
+	public List<SesionEntrenamientoEntity> obtenerEntrenamientos() {
+		return entrenamientos;
+	}
+
+
 }
 

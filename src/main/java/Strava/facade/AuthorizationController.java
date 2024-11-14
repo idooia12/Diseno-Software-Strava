@@ -17,7 +17,6 @@ public class AuthorizationController {
         this.authorizationService = authorizationService;
     }
 
-
     @PostMapping("/login")
     public ResponseEntity<String> login(
             @RequestParam("email") String email,
