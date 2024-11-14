@@ -22,7 +22,7 @@ public class UsuarioEntity {
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 	
 	public UsuarioEntity(String email, String nombre, Date fechaNacimiento, int peso, int altura, int FCmax_ppm,
-			int FCrep_ppm) {
+			int FCrep_ppm, ServicioValidacion servicio) {
 		super();
 		this.email = email;
 		this.nombre = nombre;
