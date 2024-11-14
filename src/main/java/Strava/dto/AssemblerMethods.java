@@ -126,9 +126,6 @@ public class AssemblerMethods {
 			sesionEntrenamientoEntity.setDuracion(sesionEntrenamientoDTO.getDuracion());
 			return sesionEntrenamientoEntity;
 		}
-		
-	
-	
 }
 
 
