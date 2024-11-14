@@ -9,9 +9,11 @@ public class RetoEntity {
 	private Date fechaInicio;
 	private Date fechaFin;
 	private int objetivo;
+	private TipoDeReto tipoReto; 
 	private Deporte deporte;
 	
-	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, Date fechaInicio, Date fechaFin, int objetivo, Deporte deporte) {
+	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, Date fechaInicio, Date fechaFin, 
+			int objetivo, Deporte deporte, TipoDeReto tipoReto) {
 		super();
 		this.nombre = nombre;
 		this.usuarioCreador = usuarioCreador;
@@ -19,6 +21,7 @@ public class RetoEntity {
 		this.fechaFin = fechaFin;
 		this.objetivo = objetivo;
 		this.deporte = deporte;
+		this.tipoReto = tipoReto;
 	}
 	
 	public RetoEntity() {
@@ -28,6 +31,7 @@ public class RetoEntity {
 		this.fechaFin = new Date(0);
 		this.objetivo = 0;
 		this.deporte = Deporte.running;
+		this.tipoReto = TipoDeReto.DISTANCIA;
 	}
 	
 	public String getNombre() {
@@ -78,6 +82,13 @@ public class RetoEntity {
 		this.deporte = deporte;
 	}
 	
+	public TipoDeReto getTipoReto() {
+		return tipoReto;
+	}
+
+	public void setTipoReto(TipoDeReto tipoReto) {
+		this.tipoReto = tipoReto;
+	}
 	@Override
 	public String toString() {
 		return "Reto [nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", objetivo="

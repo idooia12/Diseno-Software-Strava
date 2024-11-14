@@ -1,21 +1,21 @@
 package Strava.dto;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.Date;
+
 
 import Strava.entity.Deporte;
+import Strava.entity.TipoDeReto;
 
 public class RetoDTO implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 		private String nombre;
-		private String fechaInicio;
-		private String fechaFin;
+		private Date fechaInicio;
+		private Date fechaFin;
+		private TipoDeReto tipoReto;
 		private int objetivo;
-		private Set<Integer> deportes = new HashSet<>();
+		private Deporte deporte;
 		
 		public String getNombre() {
 			return nombre;
@@ -25,19 +25,19 @@ public class RetoDTO implements Serializable {
 			this.nombre = nombre;
 		}
 		
-		public String getFechaInicio() {
+		public Date getFechaInicio() {
 			return fechaInicio;
 		}
 		
-		public void setFechaInicio(String fechaInicio) {
+		public void setFechaInicio(Date fechaInicio) {
 			this.fechaInicio = fechaInicio;
 		}
 		
-		public String getFechaFin() {
+		public Date getFechaFin() {
 			return fechaFin;
 		}
 		
-		public void setFechaFin(String fechaFin) {
+		public void setFechaFin(Date fechaFin) {
 			this.fechaFin = fechaFin;
 		}
 		
@@ -49,37 +49,19 @@ public class RetoDTO implements Serializable {
 			this.objetivo = objetivo;
 		}
 		
-		public Set<Integer> getDeporte() {
-			return deportes;
+		public Deporte getDeporte() {
+			return deporte;
 		}
 		
-		public void setDeporte(String deporte) {
-			this.deportes = deportes;
+		public void setDeporte(Deporte deporte) {
+			this.deporte = deporte;
 		}
 		
-		@Override
-		public String toString() {
-			return "RetoDTO [nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
-					+ ", objetivo=" + objetivo + ", deporte=" + deportes + "]";
+		public TipoDeReto getTipoReto() {
+			return tipoReto;
 		}
 		
-		@Override
-		public int hashCode() {
-            return Objects.hash(deportes, fechaFin, fechaInicio, nombre, objetivo);
-        }
-		
-		@Override
-		public boolean equals(Object obj) {
-			if (this == obj)
-                return true;
-            if (obj == null)
-                return false;
-            if (getClass() != obj.getClass())
-                return false;
-            RetoDTO other = (RetoDTO) obj;
-            return Objects.equals(deportes, other.deportes) && Objects.equals(fechaFin, other.fechaFin)
-                    && Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(nombre, other.nombre)
-                    && objetivo == other.objetivo;
+		public void setTipoReto(TipoDeReto tipoReto) {
+			this.tipoReto = tipoReto;
 		}
-		
 }
