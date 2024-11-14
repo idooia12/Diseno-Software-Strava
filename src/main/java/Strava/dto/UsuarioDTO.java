@@ -3,6 +3,7 @@ package Strava.dto;
 public class UsuarioDTO {
 	private String email;
 	private String nombre;
+	private String contraseña;
 	private String fechaNacimiento;
 	private int peso;
 	private int altura;
@@ -19,6 +20,12 @@ public class UsuarioDTO {
 	}
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+	public String getContraseña() {
+		return contraseña;
+	}
+	public void setContraseña(String contraseña) {
+        this.contraseña = contraseña;
 	}
 	public String getFechaNacimiento() {
 		return fechaNacimiento;
@@ -50,5 +57,4 @@ public class UsuarioDTO {
 	public void setFCrep_ppm(int fCrep_ppm) {
 		FCrep_ppm = fCrep_ppm;
 	}
-
 }
