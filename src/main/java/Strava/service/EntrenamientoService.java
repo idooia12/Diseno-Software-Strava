@@ -20,16 +20,8 @@ public class EntrenamientoService {
 		sesion.setFecha_inicio(inicio);
 		sesion.setDeporte(Deporte.fromString(deporte));
 		sesion.setDuracion(duracion);
-
-	//	UsuarioEntity user = UsuarioEntity.getInstance().find(user.getNombre());
-
-	//  user.agregarSesion(sesion);
-	//	System.out.println("hola");
-
-	//	SesionEntrenamientoEntity.getInstance().store(sesion);
-	//	UsuarioEntity.getInstance().store(usr);
-	//	UsuarioEntity.agregarSesion(sesion);
 		
+
 	}
 	
 	public static EntrenamientoService getInstance() {

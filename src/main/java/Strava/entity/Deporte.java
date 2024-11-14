@@ -1,7 +1,7 @@
 package Strava.entity;
 
 public enum Deporte {
-	ciclismo("Running"), running("Ciclismo"), other("Otro");
+	ciclismo("cilismo"), running("running"), other("Otro");
 
 	private String nombre;
 	
