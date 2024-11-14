@@ -5,14 +5,16 @@ import java.util.Date;
 public class RetoEntity {
 	
 	private String nombre;
+	private UsuarioEntity usuarioCreador;
 	private Date fechaInicio;
 	private Date fechaFin;
 	private int objetivo;
 	private Deporte deporte;
 	
-	public RetoEntity(String nombre, Date fechaInicio, Date fechaFin, int objetivo, Deporte deporte) {
+	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, Date fechaInicio, Date fechaFin, int objetivo, Deporte deporte) {
 		super();
 		this.nombre = nombre;
+		this.usuarioCreador = usuarioCreador;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.objetivo = objetivo;
@@ -35,6 +37,14 @@ public class RetoEntity {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	
+	public UsuarioEntity getUsuarioCreador() {
+		return usuarioCreador;
+	}
+	
+	public void setUsuarioCreador(UsuarioEntity usuarioCreador) {
+        this.usuarioCreador = usuarioCreador;
+    }
 	
 	public Date getFechaInicio() {
 		return fechaInicio;
