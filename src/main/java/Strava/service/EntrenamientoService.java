@@ -2,17 +2,20 @@ package Strava.service;
 
 import java.rmi.RemoteException;
 import java.util.*;
-import java.sql.Date;
+
+import org.springframework.stereotype.Service;
+
 import java.time.LocalTime;
 
 import Strava.entity.Deporte;
 import Strava.entity.SesionEntrenamientoEntity;
 import Strava.entity.UsuarioEntity;
 
+@Service
 public class EntrenamientoService {
 	
 	private static EntrenamientoService instance;
-    private List<SesionEntrenamientoEntity> entrenamientos;
+    private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 
 	
 	

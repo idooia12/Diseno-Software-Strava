@@ -35,11 +35,11 @@ public class DataInitializer {
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento
-       SesionEntrenamientoEntity sesion1 = new SesionEntrenamientoEntity(usuario1, "Entrenamiento Matutino", Deporte.running, 10, new Date(13/11/2024), LocalTime.now(), 60);
-       SesionEntrenamientoEntity sesion2 = new SesionEntrenamientoEntity(usuario2, "Ruta de Montaña", Deporte.ciclismo, 25, new Date(14/11/2024), LocalTime.now(), 120);
-       SesionEntrenamientoEntity sesion3 = new SesionEntrenamientoEntity(usuario3,"Entrenamiento Nocturno", Deporte.running, 5, new Date(15/11/2024), LocalTime.now(), 45);
-       SesionEntrenamientoEntity sesion4 = new SesionEntrenamientoEntity(usuario1,"Ruta de Resistencia", Deporte.ciclismo, 40, new Date(16/11/2024), LocalTime.now(), 180);
-       SesionEntrenamientoEntity sesion5 = new SesionEntrenamientoEntity(usuario2,"Entrenamiento de Velocidad", Deporte.running, 8, new Date(17/11/2024), LocalTime.now(), 50);
+       entrenamientoService.crearEntrenamiento(usuario1, "Entrenamiento Matutino", Deporte.running, 10, new Date(13/11/2024), LocalTime.now(), 60);
+       entrenamientoService.crearEntrenamiento(usuario2, "Ruta de Montaña", Deporte.ciclismo, 25, new Date(14/11/2024), LocalTime.now(), 120);
+       entrenamientoService.crearEntrenamiento(usuario3,"Entrenamiento Nocturno", Deporte.running, 5, new Date(15/11/2024), LocalTime.now(), 45);
+       entrenamientoService.crearEntrenamiento(usuario1,"Ruta de Resistencia", Deporte.ciclismo, 40, new Date(16/11/2024), LocalTime.now(), 180);
+       entrenamientoService.crearEntrenamiento(usuario2,"Entrenamiento de Velocidad", Deporte.running, 8, new Date(17/11/2024), LocalTime.now(), 50);
        logger.info("Entrenamientos guardados!");
        
         };

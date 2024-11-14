@@ -22,6 +22,12 @@ public class EntrenamientoController {
     	        this.entrenamientoService = entrenamientoService;
     }
 
+    //Lista de entrenamientos. (/api/entrenamientos)
+    @GetMapping
+	public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos() {
+		return new ResponseEntity<>(entrenamientoService.getAllEntrenamientos(), HttpStatus.OK);
+	}
+    
     @PostMapping("/crear")
     public ResponseEntity<String> crearEntrenamiento(
             @RequestParam("titulo") String titulo,
