@@ -31,7 +31,7 @@ public class RetoDTO implements Serializable {
 			this.tipoReto = tipoReto;
 		}
 		
-		public RetoDTO() {
+		public RetoDTO(String string, Date date, Date date2, TipoDeReto tipoDeReto, int i, Deporte deporte2) {
 			super();
 			this.nombre = "";
 			this.fechaInicio = new Date(0);
