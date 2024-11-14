@@ -10,8 +10,6 @@ public class RetoService {
 
 	private static RetoService instance;
 	private List<RetoEntity> retos = new ArrayList<>();
-	private List<RetoEntity> retosActivos = new ArrayList<>();
-	private List<RetoEntity> retosAceptados = new ArrayList<>();
 
 
 	private RetoService() {
@@ -32,14 +30,18 @@ public class RetoService {
 		reto.setFechaInicio(fechaInicio);
 		reto.setFechaFin(fechaFin);
 		reto.setObjetivo(objetivo);
-		reto.setDeporte(deporteReto);		
+		reto.setDeporte(deporteReto);
+		retos.add(reto);
 	}
 	
-	public List<RetoEntity> getRetosActivos(Date fecha) {
+	public List<RetoEntity> getRetosActivos(UsuarioEntity usuario) {
 		Date fechaActual = new Date();
+		List<RetoEntity> retosActivos = new ArrayList<>();
 		for (RetoEntity reto : this.retos) {
 			if (reto.getFechaInicio().before(fechaActual) && reto.getFechaFin().after(fechaActual)) {
-				retosActivos.add(reto);
+				if (usuario.getRetosAceptados().contains(reto)){
+					retosActivos.add(reto);
+				}
 			}
 		}
 		return retosActivos;
@@ -47,11 +49,11 @@ public class RetoService {
 	
 	public void aceptarReto(UsuarioEntity usuario, RetoEntity reto) {
 		if (retos.contains(reto)){
-			retosAceptados.add(reto);
+			usuario.addRetoAceptado(reto);
 		}
 	}
 	
 	public List<RetoEntity> consultarRetosAceptados(UsuarioEntity usuario) {
-       return retosAceptados;
+       return usuario.getRetosAceptados();
     }
 }

@@ -1,6 +1,8 @@
 package Strava.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UsuarioEntity {
 
@@ -11,6 +13,11 @@ public class UsuarioEntity {
 	private int altura;
 	private int FCmax_ppm;
 	private int FCrep_ppm;
+	
+	private List<RetoEntity> retosCreados = new ArrayList<>();
+	private List<RetoEntity> retosAceptados = new ArrayList<>();
+	private List<RetoEntity> retosActivos = new ArrayList<>();
+	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 	
 	public UsuarioEntity(String email, String nombre, Date fechaNacimiento, int peso, int altura, int FCmax_ppm,
 			int FCrep_ppm) {
@@ -105,6 +112,35 @@ public class UsuarioEntity {
 		
 		return false;
 	}
+	
+	public List<RetoEntity> getRetosCreados() {
+		return retosCreados;
+	}
+
+	public void setRetosCreados(List<RetoEntity> retosCreados) {
+		this.retosCreados = retosCreados;
+	}
+	
+
+	public List<RetoEntity> getRetosAceptados() {
+		return retosAceptados;
+	}
+
+	public void setRetosAceptados(List<RetoEntity> retosAceptados) {
+		this.retosAceptados = retosAceptados;
+	}
+
+	public List<SesionEntrenamientoEntity> getEntrenamientos() {
+		return entrenamientos;
+	}
+
+	public void setEntrenamientos(List<SesionEntrenamientoEntity> entrenamientos) {
+		this.entrenamientos = entrenamientos;
+	}
+	
+	public void addRetoAceptado(RetoEntity reto) {
+		this.retosAceptados.add(reto);
+	}
 
 	public static Object getInstance() {
 		// TODO Auto-generated method stub
@@ -116,5 +152,7 @@ public class UsuarioEntity {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
 	
 }
