@@ -69,4 +69,7 @@ public class RetoDTO implements Serializable {
 		public void setTipoReto(TipoDeReto tipoReto) {
 			this.tipoReto = tipoReto;
 		}
+		public void setDeporte(String string) {
+			this.deporte = deporte;
+		}
 }

@@ -1,32 +1,75 @@
 package Strava.facade;
 
+
+import Strava.service.AuthorizationService;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+@RestController
+@RequestMapping("/api/auth")
 public class AuthorizationController {
 
-	public class AuthorizationService {
+    private final AuthorizationService authorizationService;
 
-	    // SIMULACIONES DE AUTENTICACIÓN Y TOKENS
-	    public boolean authenticate(String email, String password) {
-	        // Simula un proceso de autenticación verificando correo y contraseña
-	        return email.equals("usuario@example.com") && password.equals("password123");
-	    }
+    public AuthorizationController(AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
 
-	    public String generateToken(String email) {
-	        // Genera un token simulado basado en el hash del correo electrónico
-	        return "token_simulado_" + email.hashCode();
-	    }
 
-	    public boolean validateToken(String token) {
-	        // Valida que el token comience con la cadena esperada
-	        return token != null && token.startsWith("token_simulado_");
-	    }
+    @PostMapping("/login")
+    public ResponseEntity<String> login(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        try {
+            boolean authenticated = authorizationService.authenticate(email, password);
 
-	    public String getUserEmailFromToken(String token) {
-	        // Extrae el correo del token si es válido
-	        if (validateToken(token)) {
-	            return token.replace("token_simulado_", "");
-	        }
-	        return null;
-	    }
-	}
+            if (authenticated) {
+                String token = authorizationService.generateToken(email);
+                return new ResponseEntity<>(token, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Credenciales inválidas", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
+    // Endpoint para validar el token
+
+    @GetMapping("/validate")
+    public ResponseEntity<String> validateToken(
+            @RequestParam("token") String token) {
+        try {
+            boolean isValid = authorizationService.validateToken(token);
+
+            if (isValid) {
+                return new ResponseEntity<>("Token válido", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+    @GetMapping("/user-email")
+    public ResponseEntity<String> getUserEmail(
+            @RequestParam("token") String token) {
+        try {
+            String email = authorizationService.getUserEmailFromToken(token);
+
+            if (email != null) {
+                return new ResponseEntity<>(email, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
+
+
