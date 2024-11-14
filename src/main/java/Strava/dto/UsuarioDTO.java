@@ -1,13 +1,25 @@
 package Strava.dto;
 
+import java.util.Date;
+import java.util.List;
+
+import Strava.entity.RetoEntity;
+import Strava.entity.SesionEntrenamientoEntity;
+
 public class UsuarioDTO {
 	private String email;
 	private String nombre;
-	private String fechaNacimiento;
+	private Date fechaNacimiento;
 	private int peso;
 	private int altura;
 	private int FCmax_ppm;
 	private int FCrep_ppm;
+	
+	private List<RetoEntity> retosCreados;
+	private List<RetoEntity> retosAceptados;
+	private List<RetoEntity> retosActivos;
+	private List<SesionEntrenamientoEntity> entrenamientos;
+	
 	public String getEmail() {
 		return email;
 	}
@@ -20,10 +32,10 @@ public class UsuarioDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public String getFechaNacimiento() {
+	public Date getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(String fechaNacimiento) {
+	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public int getPeso() {
@@ -50,5 +62,28 @@ public class UsuarioDTO {
 	public void setFCrep_ppm(int fCrep_ppm) {
 		FCrep_ppm = fCrep_ppm;
 	}
-
+	public List<RetoEntity> getRetosCreados() {
+		return retosCreados;
+	}
+	public void setRetosCreados(List<RetoEntity> retosCreados) {
+		this.retosCreados = retosCreados;
+	}
+	public List<RetoEntity> getRetosAceptados() {
+		return retosAceptados;
+	}
+	public void setRetosAceptados(List<RetoEntity> retosAceptados) {
+		this.retosAceptados = retosAceptados;
+	}
+	public List<RetoEntity> getRetosActivos() {
+		return retosActivos;
+	}
+	public void setRetosActivos(List<RetoEntity> retosActivos) {
+		this.retosActivos = retosActivos;
+	}
+	public List<SesionEntrenamientoEntity> getEntrenamientos() {
+		return entrenamientos;
+	}
+	public void setEntrenamientos(List<SesionEntrenamientoEntity> entrenamientos) {
+		this.entrenamientos = entrenamientos;
+	}
 }
