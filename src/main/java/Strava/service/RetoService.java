@@ -32,7 +32,7 @@ public class RetoService {
 		reto.setObjetivo(objetivo);
 		reto.setDeporte(deporteReto);
 		retos.add(reto);
-		usuario.addRetoCreado(reto);
+		usuario.addRetoAceptado(reto);
 	}
 	
 	public List<RetoEntity> getRetosActivos(UsuarioEntity usuario) {

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import Strava.entity.Deporte;
 import Strava.entity.TipoDeReto;
+import Strava.entity.UsuarioEntity;
 
 public class RetoDTO implements Serializable {
 
@@ -16,6 +17,29 @@ public class RetoDTO implements Serializable {
 		private TipoDeReto tipoReto;
 		private int objetivo;
 		private Deporte deporte;
+		private UsuarioDTO usuario;
+		
+		public RetoDTO(String nombre, UsuarioDTO usuarioCreador, Date fechaInicio, Date fechaFin, 
+				int objetivo, Deporte deporte, TipoDeReto tipoReto) {
+			super();
+			this.nombre = nombre;
+			this.usuario = usuarioCreador;
+			this.fechaInicio = fechaInicio;
+			this.fechaFin = fechaFin;
+			this.objetivo = objetivo;
+			this.deporte = deporte;
+			this.tipoReto = tipoReto;
+		}
+		
+		public RetoDTO() {
+			super();
+			this.nombre = "";
+			this.fechaInicio = new Date(0);
+			this.fechaFin = new Date(0);
+			this.objetivo = 0;
+			this.deporte = Deporte.running;
+			this.tipoReto = TipoDeReto.DISTANCIA;
+		}
 		
 		public String getNombre() {
 			return nombre;
