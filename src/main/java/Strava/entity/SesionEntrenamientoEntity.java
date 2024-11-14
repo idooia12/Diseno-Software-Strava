@@ -1,19 +1,22 @@
 package Strava.entity;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 public class SesionEntrenamientoEntity {
-
+	
+	private UsuarioEntity usuario;
 	private String titulo;
 	private Deporte deporte;
 	private int distanciaKm;
 	private Date fechaInicio;
-	private Date horaInicio;
+	private LocalTime horaInicio;
 	private int duracion;
 	
-	public SesionEntrenamientoEntity(String titulo, Deporte deporte, int distanciaKm, Date fecha_inicio,
-			Date hora_inicio, int duracion) {
+	public SesionEntrenamientoEntity(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, Date fecha_inicio,
+			LocalTime hora_inicio, int duracion) {
 		super();
+		this.usuario = usuario;
 		this.titulo = titulo;
 		this.deporte = deporte;
 		this.distanciaKm = distanciaKm;
@@ -27,11 +30,19 @@ public class SesionEntrenamientoEntity {
 		this.titulo = "";
 		this.deporte = Deporte.running;
 		this.distanciaKm = 0;
-		this.fechaInicio = new Date(0);
-		this.horaInicio = new Date(0);
+		this.fechaInicio = new Date();
+		this.horaInicio = LocalTime.now();
 		this.duracion = 0;
 	}
 	
+	//GETTERS y SETTERS
+	public UsuarioEntity getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(UsuarioEntity usuario) {
+		this.usuario = usuario;
+	}
 	public String getTitulo() {
 		return titulo;
 	}
@@ -56,19 +67,19 @@ public class SesionEntrenamientoEntity {
 		this.distanciaKm = distanciaKm;
 	}
 	
-	public Date getFecha_inicio() {
+	public Date getFechaInicio() {
 		return fechaInicio;
 	}
 	
-	public void setFecha_inicio(Date date) {
+	public void setFechaInicio(Date date) {
 		fechaInicio = date;
 	}	
 	
-	public Date getHora_inicio() {
+	public LocalTime getHoraInicio() {
 		return horaInicio;
 	}
 	
-	public void setHora_inicio(Date hora_inicio) {
+	public void setHoraInicio(LocalTime hora_inicio) {
 		horaInicio = hora_inicio;
 	}
 	
@@ -80,6 +91,8 @@ public class SesionEntrenamientoEntity {
 		this.duracion = duracion;
 	}
 	
+	
+	//OTROS METODOS
 	@Override
 	public String toString() {
 		return "SesionEntrenamientoEntity [titulo=" + titulo + ", deporte=" + deporte + ", distanciaKm=" + distanciaKm

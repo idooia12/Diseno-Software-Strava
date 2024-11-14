@@ -3,6 +3,7 @@ package Strava.service;
 import java.rmi.RemoteException;
 import java.util.*;
 import java.sql.Date;
+import java.time.LocalTime;
 
 import Strava.entity.Deporte;
 import Strava.entity.SesionEntrenamientoEntity;
@@ -14,18 +15,26 @@ public class EntrenamientoService {
     private List<SesionEntrenamientoEntity> entrenamientos;
 
 	
-	 private EntrenamientoService() {
-	        entrenamientos = new ArrayList<>(); // Inicializamos la lista
-	 }
 	
-	public void crearEntrenamiento(UsuarioEntity user, String titulo, String deporte, Date inicio, int duracion) throws RemoteException {
-		SesionEntrenamientoEntity sesion = new SesionEntrenamientoEntity();
-		sesion.setTitulo(titulo);
-		sesion.setFecha_inicio(inicio);
-		sesion.setDeporte(Deporte.fromString(deporte));
-		sesion.setDuracion(duracion);
-		
-
+	public SesionEntrenamientoEntity crearEntrenamiento(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, Date fecha_inicio, LocalTime hora_inicio, int duracion) throws RemoteException {
+		SesionEntrenamientoEntity sesion = new SesionEntrenamientoEntity(usuario, titulo, deporte, distanciaKm, fecha_inicio, hora_inicio, duracion);
+	    entrenamientos.add(sesion);
+	    usuario.addEntrenamiento(sesion);
+	    return sesion;
+	}
+	
+	//Por defecto muestra los últimos 5 entrenamientos
+	public List<SesionEntrenamientoEntity> consultarUltimosEntrenamientos(UsuarioEntity usuario) {
+		List<SesionEntrenamientoEntity> ultimosEntrenamientos = new ArrayList<>();
+	    for (int i = entrenamientos.size() - 1; i >= 0; i--) {
+	        if (entrenamientos.get(i).getUsuario().equals(usuario)) {
+	            ultimosEntrenamientos.add(entrenamientos.get(i));
+	            if (ultimosEntrenamientos.size() == 5) {
+	                break;
+	            }
+	        }
+	    }
+		return ultimosEntrenamientos;
 	}
 	
 	public static EntrenamientoService getInstance() {
@@ -36,7 +45,7 @@ public class EntrenamientoService {
 		return instance;
 	}
 
-	public List<SesionEntrenamientoEntity> obtenerEntrenamientos() {
+	public List<SesionEntrenamientoEntity> getAllEntrenamientos() {
 		return entrenamientos;
 	}
 

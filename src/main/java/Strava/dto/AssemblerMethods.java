@@ -97,35 +97,25 @@ public class AssemblerMethods {
 			return usuarioEntity;
 		}
 		
-		// Convierte SesionEntrenamientoEntity a SesionEntrenamientoDTO
-		public static SesionEntrenamientoDTO toDTO(SesionEntrenamientoEntity sesionEntrenamientoEntity) {
-			if (sesionEntrenamientoEntity == null) {
-				return null;
-			}
-			SesionEntrenamientoDTO sesionEntrenamientoDTO = new SesionEntrenamientoDTO();
-			sesionEntrenamientoDTO.setTitulo(sesionEntrenamientoEntity.getTitulo());
-			sesionEntrenamientoDTO.setDeporte(sesionEntrenamientoEntity.getDeporte());
-			sesionEntrenamientoDTO.setDistanciaKm(sesionEntrenamientoEntity.getDistanciaKm());
-			sesionEntrenamientoDTO.setFechaInicio(sesionEntrenamientoEntity.getFecha_inicio());
-			sesionEntrenamientoDTO.setHoraInicio(sesionEntrenamientoEntity.getFecha_inicio());
-			sesionEntrenamientoDTO.setDuracion(sesionEntrenamientoEntity.getDuracion());
-			return sesionEntrenamientoDTO;
+		//Entrenamientos Entitiy --> DTO
+		public SesionEntrenamientoDTO toDTO(SesionEntrenamientoEntity entity) {
+		    
+			SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
+		        dto.setUsuario(toDTO(entity.getUsuario()));
+		         dto.setTitulo(entity.getTitulo());
+		         dto.setDeporte(entity.getDeporte());
+		         dto.setDistanciaKm(entity.getDistanciaKm());
+		         dto.setFechaInicio(entity.getFechaInicio());
+		         dto.setHoraInicio(entity.getHoraInicio());
+		         dto.setDuracion(entity.getDuracion());
+			return dto;
 		}
-		
-		// Convierte SesionEntrenamientoDTO a SesionEntrenamientoEntity
-		public static SesionEntrenamientoEntity toEntity(SesionEntrenamientoDTO sesionEntrenamientoDTO) {
-			if (sesionEntrenamientoDTO == null) {
-				return null;
-			}
-			SesionEntrenamientoEntity sesionEntrenamientoEntity = new SesionEntrenamientoEntity();
-			sesionEntrenamientoEntity.setTitulo(sesionEntrenamientoDTO.getTitulo());
-			sesionEntrenamientoEntity.setDeporte(sesionEntrenamientoDTO.getDeporte());
-			sesionEntrenamientoEntity.setDistanciaKm(sesionEntrenamientoDTO.getDistanciaKm());
-			sesionEntrenamientoEntity.setFecha_inicio(sesionEntrenamientoDTO.getFechaInicio());
-			sesionEntrenamientoEntity.setHora_inicio(sesionEntrenamientoDTO.getFechaInicio());
-			sesionEntrenamientoEntity.setDuracion(sesionEntrenamientoDTO.getDuracion());
-			return sesionEntrenamientoEntity;
-		}
+
+	    // Entrenamientos DTO --> Entity
+	    public SesionEntrenamientoEntity toEntity(SesionEntrenamientoDTO dto) {
+	        SesionEntrenamientoEntity entity = new SesionEntrenamientoEntity(toEntity(dto.getUsuario()), dto.getTitulo(), dto.getDeporte(), dto.getDistanciaKm(), dto.getFechaInicio(), dto.getHoraInicio(), dto.getDuracion());
+	        return entity;
+	    }
 }
 
 

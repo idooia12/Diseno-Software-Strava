@@ -152,6 +152,7 @@ public class UsuarioEntity {
 		this.retosActivos = retosActivos;
 	}
 	
+	//ANADIR A LISTAS
 	public void addRetoAceptado(RetoEntity reto) {
 		this.retosAceptados.add(reto);
 	}
@@ -160,6 +161,13 @@ public class UsuarioEntity {
 		this.retosCreados.add(reto);
 	}
 	
+	public void addRetoActivo(RetoEntity reto) {
+		this.retosActivos.add(reto);
+	}
+	
+	public void addEntrenamiento(SesionEntrenamientoEntity entrenamiento) {
+		this.entrenamientos.add(entrenamiento);
+	}
 
 
 

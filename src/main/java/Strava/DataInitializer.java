@@ -1,5 +1,6 @@
 package Strava;
 
+import java.time.LocalTime;
 import java.util.Date;
 
 import org.slf4j.Logger;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import Strava.entity.*;
+import Strava.service.*;
 
 
 @Configuration
@@ -16,9 +18,10 @@ public class DataInitializer {
   
 	private static final Logger logger = LoggerFactory.getLogger(DataInitializer.class);
 	@Bean
-	 CommandLineRunner initData() {
+	 CommandLineRunner initData(RetoService retoService, EntrenamientoService entrenamientoService, AuthorizationService autorizacionService) {
         return args -> {	
-        // Crear usuarios
+        	
+        // Crear usuarios	
        UsuarioEntity usuario1 = new UsuarioEntity("Manu@deusto.es", "Manu", new Date(12/12/1999),65, 180, 190, 120, ServicioValidacion.Google);
        UsuarioEntity usuario2 = new UsuarioEntity("Ana@deusto.es", "Ana", new Date(01/03/2002), 55, 165, 175, 110, ServicioValidacion.Meta);
        UsuarioEntity usuario3 = new UsuarioEntity("Carlos@deusto.es", "Carlos", new Date(30/02/1990), 80, 175, 185, 125, ServicioValidacion.Google);
@@ -32,12 +35,17 @@ public class DataInitializer {
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento
-       SesionEntrenamientoEntity sesion1 = new SesionEntrenamientoEntity("Entrenamiento Matutino", Deporte.running, 10, new Date(13/11/2024), new Date(13/11/2024), 60);
-       SesionEntrenamientoEntity sesion2 = new SesionEntrenamientoEntity("Ruta de Montaña", Deporte.ciclismo, 25, new Date(14/11/2024), new Date(13/11/2024), 120);
-       SesionEntrenamientoEntity sesion3 = new SesionEntrenamientoEntity("Entrenamiento Nocturno", Deporte.running, 5, new Date(15/11/2024), new Date(13/11/2024), 45);
-       SesionEntrenamientoEntity sesion4 = new SesionEntrenamientoEntity("Ruta de Resistencia", Deporte.ciclismo, 40, new Date(16/11/2024), new Date(13/11/2024), 180);
-       SesionEntrenamientoEntity sesion5 = new SesionEntrenamientoEntity("Entrenamiento de Velocidad", Deporte.running, 8, new Date(17/11/2024), new Date(13/11/2024), 50);
+       SesionEntrenamientoEntity sesion1 = new SesionEntrenamientoEntity(usuario1, "Entrenamiento Matutino", Deporte.running, 10, new Date(13/11/2024), LocalTime.now(), 60);
+       SesionEntrenamientoEntity sesion2 = new SesionEntrenamientoEntity(usuario2, "Ruta de Montaña", Deporte.ciclismo, 25, new Date(14/11/2024), LocalTime.now(), 120);
+       SesionEntrenamientoEntity sesion3 = new SesionEntrenamientoEntity(usuario3,"Entrenamiento Nocturno", Deporte.running, 5, new Date(15/11/2024), LocalTime.now(), 45);
+       SesionEntrenamientoEntity sesion4 = new SesionEntrenamientoEntity(usuario1,"Ruta de Resistencia", Deporte.ciclismo, 40, new Date(16/11/2024), LocalTime.now(), 180);
+       SesionEntrenamientoEntity sesion5 = new SesionEntrenamientoEntity(usuario2,"Entrenamiento de Velocidad", Deporte.running, 8, new Date(17/11/2024), LocalTime.now(), 50);
        logger.info("Entrenamientos guardados!");
+       
         };
+        
+       
+        
+        
 }
 }

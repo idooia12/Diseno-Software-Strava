@@ -1,8 +1,6 @@
 package Strava.facade;
 
-import Strava.entity.Deporte;
-import Strava.entity.SesionEntrenamientoEntity;
-import Strava.entity.UsuarioEntity;
+import Strava.entity.*;
 import Strava.service.EntrenamientoService;
 
 import org.springframework.http.HttpStatus;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.rmi.RemoteException;
 import java.sql.Date;
+import java.time.LocalTime;
 import java.util.List;
 
 @RestController
@@ -33,13 +32,16 @@ public class EntrenamientoController {
             // Placeholder para obtener el usuario actual
             UsuarioEntity usuario = new UsuarioEntity();
             usuario.setEmail("usuario@ejemplo.com");
+            Deporte deporteEnum = Deporte.fromString(deporte);
 
             // Aquí utilizamos los parámetros recibidos para crear el entrenamiento
             entrenamientoService.crearEntrenamiento(
                 usuario,
                 titulo,
-                deporte,
+                deporteEnum,
+                5,
                 fechaInicio,
+                LocalTime.now(),
                 duracion
             );
 
@@ -59,7 +61,7 @@ public class EntrenamientoController {
     public ResponseEntity<List<SesionEntrenamientoEntity>> getEntrenamientos() {
         try {
             // Obtener la lista de entrenamientos del servicio
-            List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.obtenerEntrenamientos();
+            List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.getAllEntrenamientos();
 
             if (entrenamientos != null && !entrenamientos.isEmpty()) {
                 return new ResponseEntity<>(entrenamientos, HttpStatus.OK);

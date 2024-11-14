@@ -1,6 +1,7 @@
 package Strava.dto;
 
 import java.io.Serializable;
+import java.time.LocalTime;
 import java.util.Date;
 
 import Strava.entity.Deporte;
@@ -8,12 +9,22 @@ import Strava.entity.Deporte;
 public class SesionEntrenamientoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private UsuarioDTO usuario;
 	private String titulo;
 	private Deporte deporte;
 	private int distanciaKm;
 	private Date fechaInicio;
-	private Date horaInicio;
+	private LocalTime horaInicio;
 	private int duracion;
+	
+	public UsuarioDTO getUsuario() {
+        return usuario;
+    }
+	
+	public void setUsuario(UsuarioDTO usuario) {
+		this.usuario = usuario;
+	}
 	
 	public String getTitulo() {
 		return titulo;
@@ -39,10 +50,10 @@ public class SesionEntrenamientoDTO implements Serializable {
 	public void setFechaInicio(Date fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
-	public Date getHoraInicio() {
+	public LocalTime getHoraInicio() {
 		return horaInicio;
 	}
-	public void setHoraInicio(Date horaInicio) {
+	public void setHoraInicio(LocalTime horaInicio) {
 		this.horaInicio = horaInicio;
 	}
 	public int getDuracion() {
