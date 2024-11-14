@@ -9,6 +9,7 @@ import Strava.entity.Deporte;
 import Strava.entity.RetoEntity;
 import Strava.entity.UsuarioEntity;
 import Strava.service.RetoService;
+import Strava.dto.AssemblerMethods;
 import Strava.dto.RetoDTO;
 
 public class RetoController {
@@ -72,7 +73,7 @@ public class RetoController {
 
     // Método auxiliar para convertir un RetoEntity a RetoDTO
     private RetoDTO retoToDTO(RetoEntity reto) {
-        return new RetoDTO(null, null, null, null, 0, null, null );
+        return AssemblerMethods.retoToDTO(reto);
     }
 }
 

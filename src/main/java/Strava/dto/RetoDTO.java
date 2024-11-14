@@ -19,28 +19,9 @@ public class RetoDTO implements Serializable {
 		private Deporte deporte;
 		private UsuarioDTO usuario;
 		
-		public RetoDTO(String nombre, UsuarioDTO usuarioCreador, Date fechaInicio, Date fechaFin, 
-				int objetivo, Deporte deporte, TipoDeReto tipoReto) {
+		public RetoDTO() {
 			super();
-			this.nombre = nombre;
-			this.usuario = usuarioCreador;
-			this.fechaInicio = fechaInicio;
-			this.fechaFin = fechaFin;
-			this.objetivo = objetivo;
-			this.deporte = deporte;
-			this.tipoReto = tipoReto;
 		}
-		
-		public RetoDTO(String string, Date date, Date date2, TipoDeReto tipoDeReto, int i, Deporte deporte2) {
-			super();
-			this.nombre = "";
-			this.fechaInicio = new Date(0);
-			this.fechaFin = new Date(0);
-			this.objetivo = 0;
-			this.deporte = Deporte.running;
-			this.tipoReto = TipoDeReto.DISTANCIA;
-		}
-		
 		public String getNombre() {
 			return nombre;
 		}
