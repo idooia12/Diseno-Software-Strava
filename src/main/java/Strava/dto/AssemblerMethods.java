@@ -1,9 +1,10 @@
 package Strava.dto;
 
-import Strava.entity.RetoEntity;
+import Strava.entity.*;
 
-//Convierte RetoEntity en RetoDTO
+
 public class AssemblerMethods {
+	//Convierte RetoEntity en RetoDTO
 	 public static RetoDTO retoToDTO(RetoEntity retoEntity) {
 	        if (retoEntity == null) {
 	            return null;
@@ -32,6 +33,67 @@ public class AssemblerMethods {
 			retoEntity.setTipoReto(retoDTO.getTipoReto());
 			return retoEntity;
 	    }
+
+		// Convierte UsuarioEntity en UsuarioDTO
+		public static UsuarioDTO usuarioToDTO(UsuarioEntity usuarioEntity) {
+			if (usuarioEntity == null) {
+				return null;
+			}
+			UsuarioDTO usuarioDTO = new UsuarioDTO();
+			usuarioDTO.setEmail(usuarioEntity.getEmail());
+			usuarioDTO.setNombre(usuarioEntity.getNombre());
+			usuarioDTO.setFechaNacimiento(usuarioEntity.getFechaNacimiento());
+			usuarioDTO.setPeso(usuarioEntity.getPeso());
+			usuarioDTO.setAltura(usuarioEntity.getAltura());
+			usuarioDTO.setFCmax_ppm(usuarioEntity.getFCmax_ppm());
+			usuarioDTO.setFCrep_ppm(usuarioEntity.getFCrep_ppm());
+			usuarioDTO.setRetosCreados(usuarioEntity.getRetosCreados());
+			usuarioDTO.setRetosAceptados(usuarioEntity.getRetosAceptados());
+			usuarioDTO.setRetosActivos(usuarioEntity.getRetosActivos());
+			usuarioDTO.setEntrenamientos(usuarioEntity.getEntrenamientos());
+			return usuarioDTO;
+		}
+		//Convierte UsuarioEntity a UsuarioDTO
+		public static UsuarioDTO toDTO(UsuarioEntity usuarioEntity) {
+			if (usuarioEntity == null) {
+				return null;
+			}
+			UsuarioDTO usuarioDTO = new UsuarioDTO();
+			usuarioDTO.setEmail(usuarioEntity.getEmail());
+			usuarioDTO.setNombre(usuarioEntity.getNombre());
+			usuarioDTO.setFechaNacimiento(usuarioEntity.getFechaNacimiento());
+			usuarioDTO.setPeso(usuarioEntity.getPeso());
+			usuarioDTO.setAltura(usuarioEntity.getAltura());
+			usuarioDTO.setFCmax_ppm(usuarioEntity.getFCmax_ppm());
+			usuarioDTO.setFCrep_ppm(usuarioEntity.getFCrep_ppm());
+			usuarioDTO.setRetosCreados(usuarioEntity.getRetosCreados());
+			usuarioDTO.setRetosAceptados(usuarioEntity.getRetosAceptados());
+			usuarioDTO.setRetosActivos(usuarioEntity.getRetosActivos());
+			usuarioDTO.setEntrenamientos(usuarioEntity.getEntrenamientos());
+			return usuarioDTO;
+		}
+		
+		// Convierte UsuarioDTO a UsuarioEntity
+		public static UsuarioEntity toEntity(UsuarioDTO usuarioDTO) {
+			if (usuarioDTO == null) {
+				return null;
+			}
+			UsuarioEntity usuarioEntity = new UsuarioEntity();
+			usuarioEntity.setEmail(usuarioDTO.getEmail());
+			usuarioEntity.setNombre(usuarioDTO.getNombre());
+			usuarioEntity.setFechaNacimiento(usuarioDTO.getFechaNacimiento());
+			usuarioEntity.setPeso(usuarioDTO.getPeso());
+			usuarioEntity.setAltura(usuarioDTO.getAltura());
+			usuarioEntity.setFCmax_ppm(usuarioDTO.getFCmax_ppm());
+			usuarioEntity.setFCrep_ppm(usuarioDTO.getFCrep_ppm());
+			usuarioEntity.setRetosCreados(usuarioDTO.getRetosCreados());
+			usuarioEntity.setRetosAceptados(usuarioDTO.getRetosAceptados());
+			usuarioEntity.setRetosActivos(usuarioDTO.getRetosActivos());
+			usuarioEntity.setEntrenamientos(usuarioDTO.getEntrenamientos());
+			return usuarioEntity;
+		}
+		
+	
 }
 
 

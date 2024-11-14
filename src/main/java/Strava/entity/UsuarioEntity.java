@@ -143,9 +143,25 @@ public class UsuarioEntity {
 		this.entrenamientos = entrenamientos;
 	}
 	
+
+	public List<RetoEntity> getRetosActivos() {
+		return retosActivos;
+	}
+
+	public void setRetosActivos(List<RetoEntity> retosActivos) {
+		this.retosActivos = retosActivos;
+	}
+	
 	public void addRetoAceptado(RetoEntity reto) {
 		this.retosAceptados.add(reto);
 	}
+	
+	public void addRetoCreado(RetoEntity reto) {
+		this.retosCreados.add(reto);
+	}
+	
+
+
 
 	public static Object getInstance() {
 		// TODO Auto-generated method stub
