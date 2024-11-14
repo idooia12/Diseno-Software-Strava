@@ -1,6 +1,6 @@
 package Strava.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 public class SesionEntrenamientoEntity {
 
@@ -60,8 +60,8 @@ public class SesionEntrenamientoEntity {
 		return fechaInicio;
 	}
 	
-	public void setFecha_inicio(Date fecha_inicio) {
-		fechaInicio = fecha_inicio;
+	public void setFecha_inicio(Date date) {
+		fechaInicio = date;
 	}	
 	
 	public Date getHora_inicio() {

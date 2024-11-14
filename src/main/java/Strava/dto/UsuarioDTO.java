@@ -3,8 +3,7 @@ package Strava.dto;
 import java.util.Date;
 import java.util.List;
 
-import Strava.entity.RetoEntity;
-import Strava.entity.SesionEntrenamientoEntity;
+import Strava.entity.*;
 
 public class UsuarioDTO {
 	private String email;
@@ -15,6 +14,7 @@ public class UsuarioDTO {
 	private int altura;
 	private int FCmax_ppm;
 	private int FCrep_ppm;
+	private ServicioValidacion servicio;
 	
 	private List<RetoEntity> retosCreados;
 	private List<RetoEntity> retosAceptados;
@@ -92,5 +92,13 @@ public class UsuarioDTO {
 	}
 	public void setEntrenamientos(List<SesionEntrenamientoEntity> entrenamientos) {
 		this.entrenamientos = entrenamientos;
+	}
+
+	public ServicioValidacion getServicio() {
+		return servicio;
+	}
+
+	public void setServicio(ServicioValidacion servicio) {
+		this.servicio = servicio;
 	}
 }
