@@ -1,43 +1,39 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '3.3.5'
-	id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(21)
-	}
-}
-
-repositories {
-	mavenCentral()
-}
-
-dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	implementation 'org.springframework.boot:spring-boot-starter-web'	
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // Ejemplo de otra dependencia
-    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
-	implementation 'org.springframework:spring-web:5.3.30'
-	implementation 'javax.servlet:javax.servlet-api:4.0.1'
-	
-}
-
-tasks.named('test') {
-	useJUnitPlatform()
-}
-
-
-// Para evitar conflictos con Jakarta y javax
-configurations.all {
-    resolutionStrategy {
-        force 'org.springframework:spring-web:5.3.30' // Asegúrate de usar versiones compatibles
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
     }
 }
 
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+   // implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'jakarta.servlet:jakarta.servlet-api:5.0.0'  // Actualizado a jakarta.servlet
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+bootJar {
+    mainClass = 'com.example.demo.StravaApplication'  // Ajusta el paquete y nombre de la clase si es necesario
+}
