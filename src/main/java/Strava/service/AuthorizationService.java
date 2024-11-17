@@ -74,10 +74,8 @@ public class AuthorizationService {
         return false;
     }
     
-    // Token valido?
+    // Token valido
     public boolean validateToken(String token) {
-		System.out.println(token);
-		System.out.println(usuariosActivos.containsKey(token));
         return usuariosActivos.containsKey(token);
     }
     
