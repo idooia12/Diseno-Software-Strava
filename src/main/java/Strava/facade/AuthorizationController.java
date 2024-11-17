@@ -58,7 +58,7 @@ public class AuthorizationController {
             if (isValid) {
                 return new ResponseEntity<>("Token válido", HttpStatus.OK);
             } else {
-                return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
+                return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);  
             }
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);

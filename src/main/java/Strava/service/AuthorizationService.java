@@ -64,6 +64,7 @@ public class AuthorizationService {
     }
     
     
+    
     //Logout
     public boolean logout(String token) {
         if (usuariosActivos.containsKey(token)) {
@@ -75,6 +76,8 @@ public class AuthorizationService {
     
     // Token valido?
     public boolean validateToken(String token) {
+		System.out.println(token);
+		System.out.println(usuariosActivos.containsKey(token));
         return usuariosActivos.containsKey(token);
     }
     

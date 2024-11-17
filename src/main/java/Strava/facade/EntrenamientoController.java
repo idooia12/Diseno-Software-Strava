@@ -36,6 +36,7 @@ public class EntrenamientoController {
     @GetMapping
     public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos(
             @RequestHeader("Authorization") String token) {
+    	System.out.println("getmapping 1");
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -83,6 +84,7 @@ public class EntrenamientoController {
     @GetMapping("/listar")
     public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos(
             @RequestHeader("Authorization") String token) {
+    	System.out.println("getmapping 2");
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
