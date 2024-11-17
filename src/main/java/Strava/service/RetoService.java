@@ -29,6 +29,7 @@ public class RetoService {
 	public void crearReto(UsuarioEntity usuario, String nombre, LocalDate fechaInicio, LocalDate fechaFin,
 			int objetivo, Deporte deporteReto) {
 		RetoEntity reto = new RetoEntity();
+		reto.setUsuarioCreador(usuario);
 		reto.setNombre(nombre);
 		reto.setFechaInicio(fechaInicio);
 		reto.setFechaFin(fechaFin);
