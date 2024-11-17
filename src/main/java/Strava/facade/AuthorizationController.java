@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthorizationController {
-
-    private final AuthorizationService authorizationService;
-
-    public AuthorizationController(AuthorizationService authorizationService) {
-        this.authorizationService = authorizationService;
-    }
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     @PostMapping("/login")
     public ResponseEntity<String> login(

@@ -3,8 +3,9 @@ package Strava.entity;
 import java.time.LocalTime;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class SesionEntrenamientoEntity {
-	
 	private UsuarioEntity usuario;
 	private String titulo;
 	private Deporte deporte;

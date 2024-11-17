@@ -1,9 +1,12 @@
 package Strava.dto;
 
 import Strava.entity.*;
+import Strava.service.AuthorizationService;
 
 
 public class AssemblerMethods {
+    private static AuthorizationService authorizationService= AuthorizationService.getInstance();
+
 	//Convierte RetoEntity en RetoDTO
 	 public static RetoDTO retoToDTO(RetoEntity retoEntity) {
 	        if (retoEntity == null) {
@@ -97,23 +100,26 @@ public class AssemblerMethods {
 			return usuarioEntity;
 		}
 		
-		//Entrenamientos Entitiy --> DTO
-		public SesionEntrenamientoDTO toDTO(SesionEntrenamientoEntity entity) {
-		    
-			SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
-		        dto.setUsuario(toDTO(entity.getUsuario()));
-		         dto.setTitulo(entity.getTitulo());
-		         dto.setDeporte(entity.getDeporte());
-		         dto.setDistanciaKm(entity.getDistanciaKm());
-		         dto.setFechaInicio(entity.getFechaInicio());
-		         dto.setHoraInicio(entity.getHoraInicio());
-		         dto.setDuracion(entity.getDuracion());
-			return dto;
+		public static SesionEntrenamientoDTO toDTO(SesionEntrenamientoEntity entity) {
+		    if (entity == null) {
+		        return null;
+		    }
+		    SesionEntrenamientoDTO dto = new SesionEntrenamientoDTO();
+		    dto.setUsuario(usuarioToDTO(entity.getUsuario()).getEmail()); // Transformar el usuario a mail
+		    dto.setTitulo(entity.getTitulo());
+		    dto.setDeporte(entity.getDeporte());
+		    dto.setDistanciaKm(entity.getDistanciaKm());
+		    dto.setFechaInicio(entity.getFechaInicio());
+		    dto.setHoraInicio(entity.getHoraInicio());
+		    dto.setDuracion(entity.getDuracion());
+		    return dto;
 		}
-
-	    // Entrenamientos DTO --> Entity
+		
+		
+	   // Entrenamientos DTO --> Entity
 	    public SesionEntrenamientoEntity toEntity(SesionEntrenamientoDTO dto) {
-	        SesionEntrenamientoEntity entity = new SesionEntrenamientoEntity(toEntity(dto.getUsuario()), dto.getTitulo(), dto.getDeporte(), dto.getDistanciaKm(), dto.getFechaInicio(), dto.getHoraInicio(), dto.getDuracion());
+	       UsuarioEntity usuario = authorizationService.getUsuarioFromEmail(dto.getUsuario());
+	    	SesionEntrenamientoEntity entity = new SesionEntrenamientoEntity(usuario, dto.getTitulo(), dto.getDeporte(), dto.getDistanciaKm(), dto.getFechaInicio(), dto.getHoraInicio(), dto.getDuracion());
 	        return entity;
 	    }
 }

@@ -10,7 +10,7 @@ public class SesionEntrenamientoDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	private UsuarioDTO usuario;
+	private String mailUsuario;
 	private String titulo;
 	private Deporte deporte;
 	private int distanciaKm;
@@ -18,12 +18,12 @@ public class SesionEntrenamientoDTO implements Serializable {
 	private LocalTime horaInicio;
 	private int duracion;
 	
-	public UsuarioDTO getUsuario() {
-        return usuario;
+	public String getUsuario() {
+        return mailUsuario;
     }
 	
-	public void setUsuario(UsuarioDTO usuario) {
-		this.usuario = usuario;
+	public void setUsuario(String mailUsuario) {
+		this.mailUsuario = mailUsuario;
 	}
 	
 	public String getTitulo() {

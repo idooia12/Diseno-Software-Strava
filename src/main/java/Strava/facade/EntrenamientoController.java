@@ -1,6 +1,7 @@
 package Strava.facade;
 
 import Strava.entity.*;
+import Strava.dto.*;
 import Strava.service.EntrenamientoService;
 
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/entrenamientos")
 public class EntrenamientoController {
 
-    private final  EntrenamientoService entrenamientoService; //= EntrenamientoService.getInstance();
+    private final  EntrenamientoService entrenamientoService;
     
     public EntrenamientoController (EntrenamientoService entrenamientoService) {
     	        this.entrenamientoService = entrenamientoService;
@@ -64,18 +65,23 @@ public class EntrenamientoController {
     
     // Método GET para obtener todos los entrenamientos
     @GetMapping("/listar")
-    public ResponseEntity<List<SesionEntrenamientoEntity>> getEntrenamientos() {
+    public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos() {
         try {
-            // Obtener la lista de entrenamientos del servicio
+            // Obtener la lista de entidades de entrenamientos desde el servicio
             List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.getAllEntrenamientos();
 
-            if (entrenamientos != null && !entrenamientos.isEmpty()) {
-                return new ResponseEntity<>(entrenamientos, HttpStatus.OK);
+            // Convertir entidades a DTOs
+            List<SesionEntrenamientoDTO> entrenamientosDTO = entrenamientos.stream()
+                .map(AssemblerMethods::toDTO) // Convierte cada entidad a un DTO
+                .toList();
+
+            if (!entrenamientosDTO.isEmpty()) {
+                return new ResponseEntity<>(entrenamientosDTO, HttpStatus.OK); // Devolver los DTOs
             } else {
-                return null; //new ResponseEntity<>("No hay entrenamientos disponibles", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // No hay entrenamientos
             }
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR); // Error interno
         }
     }
 }
