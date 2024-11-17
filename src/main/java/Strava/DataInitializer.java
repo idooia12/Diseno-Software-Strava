@@ -21,9 +21,9 @@ public class DataInitializer {
         return args -> {	
        
         // Crear usuarios	
-       UsuarioEntity usuario1 = new UsuarioEntity("Manu@deusto.es", "Manu", LocalDate.of(1990, 11, 17),65, 180, 190, 120, ServicioValidacion.Google);
-       UsuarioEntity usuario2 = new UsuarioEntity("Ana@deusto.es", "Ana", LocalDate.of(2002, 1, 20), 55, 165, 175, 110, ServicioValidacion.Meta);
-       UsuarioEntity usuario3 = new UsuarioEntity("Carlos@deusto.es", "Carlos", LocalDate.of(2024, 3, 15), 80, 175, 185, 125, ServicioValidacion.Google);
+       UsuarioEntity usuario1 = new UsuarioEntity("Manu@deusto.es", "Manu", "pass", LocalDate.of(1990, 11, 17),65, 180, 190, 120, ServicioValidacion.Google);
+       UsuarioEntity usuario2 = new UsuarioEntity("Ana@deusto.es", "Ana", "pass",LocalDate.of(2002, 1, 20), 55, 165, 175, 110, ServicioValidacion.Meta);
+       UsuarioEntity usuario3 = new UsuarioEntity("Carlos@deusto.es", "Carlos", "pass", LocalDate.of(2024, 3, 15), 80, 175, 185, 125, ServicioValidacion.Google);
        logger.info("Usuarios guardados!");
        
        // Crear retos

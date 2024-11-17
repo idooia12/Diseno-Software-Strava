@@ -22,6 +22,7 @@ public class RetoEntity {
 		this.objetivo = objetivo;
 		this.deporte = deporte;
 		this.tipoReto = tipoReto;
+		usuarioCreador.addRetoCreado(this);
 	}
 	
 	public RetoEntity() {

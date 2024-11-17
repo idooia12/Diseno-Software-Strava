@@ -15,13 +15,16 @@ public class AuthorizationService {
 	 private List<UsuarioEntity> usuarios = new ArrayList<>();
 	 private Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
 	
-	//GETTERS y SETTERS
+	
+	 //Singleton -> Solo existe una instancia de la clase durante la ejecucion del programa
 	public static AuthorizationService getInstance() {
 		if (instance == null) {
 			instance = new AuthorizationService();
 		}
 		return instance;
 	}
+	
+	// Getters y setters
 	public List<UsuarioEntity> getUsuarios() {
 		return usuarios;
 	}
@@ -37,8 +40,45 @@ public class AuthorizationService {
 	public void setUsuariosActivos(Map<String, UsuarioEntity> usuariosActivos) {
 		this.usuariosActivos = usuariosActivos;
 	}
+	//Add
+	public void addUsuario(UsuarioEntity usuario) {
+		usuarios.add(usuario);
+	}
+
+	public void addUsuarioActivo(String token, UsuarioEntity usuario) {
+		usuariosActivos.put(token, usuario);
+	}
 	
-	// Otener el UsuarioEntity desde el email
+	 //Login
+    public String login(String email, String password) {
+    	UsuarioEntity usuario = getUsuarioFromEmail(email);
+    	
+    	for (UsuarioEntity user : usuarios) {
+    		if (user.getEmail().equals(email) && password.equals(user.getContraseña())) { //De momento miramos nosotros si coinciden usuario y contraseña
+    			String token = generateToken(email);
+    			addUsuarioActivo(token, usuario);
+    			return token;
+    		}
+    	}
+    	return null;
+    }
+    
+    //Logout
+    public boolean logout(String token) {
+        if (usuariosActivos.containsKey(token)) {
+            usuariosActivos.remove(token);
+            return true;
+        }
+        return false;
+    }
+    
+    // Token valido?
+    public boolean validateToken(String token) {
+        return usuariosActivos.containsKey(token);
+    }
+    
+	// Metodos auxiliares
+
     public UsuarioEntity getUsuarioFromEmail(String email) {
 		for (UsuarioEntity usuario : usuarios) {
 			if (usuario.getEmail().equals(email)) {
@@ -50,25 +90,17 @@ public class AuthorizationService {
 		}
 		return null;
     }
-
-    // SIMULACIONES DE AUTENTICACIÓN Y TOKENS
-    public boolean authenticate(String email, String password) {
-        return email.equals("usuario@example.com") && password.equals("password123");
-    }
-
+    
     public String generateToken(String email) {
-        return "token_simulado_" + email.hashCode();
+        String prefijoMail = email.split("@")[0];
+        String timeStamp = String.valueOf(System.currentTimeMillis());  	
+    	return prefijoMail + "@" + timeStamp;
     }
-
-    public boolean validateToken(String token) {
-        return token != null && token.startsWith("token_simulado_");
+    
+    /** Obtener usuario desde token */
+    public UsuarioEntity getUsuarioFromToken(String token) {
+        return usuariosActivos.get(token);
     }
-
-    public String getUserEmailFromToken(String token) {
-        if (validateToken(token)) {
-            return token.replace("token_simulado_", "");
-        }
-        return null;
-    }
+        
     // Realizado con ayuda de ChatGPT
 }

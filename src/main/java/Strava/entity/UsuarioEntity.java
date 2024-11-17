@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import Strava.service.AuthorizationService;
+
 public class UsuarioEntity {
 
 	private String email;
@@ -21,18 +23,19 @@ public class UsuarioEntity {
 	private List<RetoEntity> retosActivos = new ArrayList<>();
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 	
-	public UsuarioEntity(String email, String nombre, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
+	public UsuarioEntity(String email, String nombre, String contrasena, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
 			int FCrep_ppm, ServicioValidacion servicio) {
 		super();
 		this.email = email;
 		this.nombre = nombre;
-		this.contraseña = "";
+		this.contraseña = contrasena;
 		this.fechaNacimiento = fechaNacimiento;
 		this.peso = peso;
 		this.altura = altura;
 		this.FCmax_ppm = FCmax_ppm;
 		this.FCrep_ppm = FCrep_ppm;
 		this.servicio = servicio;
+		AuthorizationService.getInstance().addUsuario(this);
 	}
 	
 	public UsuarioEntity() {
@@ -40,20 +43,18 @@ public class UsuarioEntity {
 		this.email = "";
 		this.nombre = "";
 		this.contraseña = "";
-		this.fechaNacimiento = LocalDate.parse("2000-01-01");
+		this.fechaNacimiento = LocalDate.of(1980,1,1);
 		this.peso = 0;
 		this.altura = 0;
 		this.FCmax_ppm = 0;
 		this.FCrep_ppm = 0;
 		this.servicio = ServicioValidacion.Google;
+		AuthorizationService.getInstance().addUsuario(this);
+
 	}
 	
-	@Override
-	public String toString() {
-		return "Usuario [email=" + email + ", nombre=" + nombre + ", contraseña=" + contraseña + ",  fechaNacimiento=" + fechaNacimiento + ", peso="
-				+ peso + ", altura=" + altura + ", FCmax_ppm=" + FCmax_ppm + ", FCrep_ppm=" + FCrep_ppm + ", servicio=" + servicio + "]";
-	}
 	
+	//Getters y setters
 	public String getEmail() {
 		return email;
 	}
@@ -107,16 +108,7 @@ public class UsuarioEntity {
 	}
 	public void setServicio(ServicioValidacion servicio) {
 		this.servicio = servicio;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this.getClass().getName().equals(obj.getClass().getName())) {
-			return this.email.equals(((UsuarioEntity)obj).email);
-		}
-		
-		return false;
-	}
+	}	
 	
 	public List<RetoEntity> getRetosCreados() {
 		return retosCreados;
@@ -168,18 +160,19 @@ public class UsuarioEntity {
 	public void addEntrenamiento(SesionEntrenamientoEntity entrenamiento) {
 		this.entrenamientos.add(entrenamiento);
 	}
-
-
-
-	public static Object getInstance() {
-	    // TODO Auto-generated method stub
-		return null;
+	
+	@Override
+	public String toString() {
+		return "Usuario [email=" + email + ", nombre=" + nombre + ", contraseña=" + contraseña + ",  fechaNacimiento=" + fechaNacimiento + ", peso="
+				+ peso + ", altura=" + altura + ", FCmax_ppm=" + FCmax_ppm + ", FCrep_ppm=" + FCrep_ppm + ", servicio=" + servicio + "]";
 	}
 	
-	
-	public UsuarioEntity find(String nombre) {
-		// TODO Auto-generated method stub
-		return null;
+	@Override
+	public boolean equals(Object obj) {
+		if (this.getClass().getName().equals(obj.getClass().getName())) {
+			return this.email.equals(((UsuarioEntity)obj).email);
+		}		
+		return false;
 	}
 	
 	

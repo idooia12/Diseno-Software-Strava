@@ -130,4 +130,10 @@ public class RetoController {
         }
         return null;
     }
+    
+    
+    @GetMapping("/prueba")
+    public ResponseEntity<String> testEndpoint() {
+        return new ResponseEntity<>("Funcionando correctamente", HttpStatus.OK);
+    }
 }
