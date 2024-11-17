@@ -18,13 +18,8 @@ import java.util.List;
 @RequestMapping("/api/entrenamientos")
 public class EntrenamientoController {
 
-    private final EntrenamientoService entrenamientoService;
-    private final AuthorizationService authorizationService;
-
-    public EntrenamientoController(EntrenamientoService entrenamientoService, AuthorizationService authorizationService) {
-        this.entrenamientoService = entrenamientoService;
-        this.authorizationService = authorizationService;
-    }
+    private final EntrenamientoService entrenamientoService = EntrenamientoService.getInstance();
+    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
 
     // Método para validar el token utilizando AuthorizationService
     private boolean validarToken(String token) {
@@ -35,8 +30,7 @@ public class EntrenamientoController {
     // Lista de entrenamientos
     @GetMapping
     public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos(
-            @RequestHeader("Authorization") String token) {
-    	System.out.println("getmapping 1");
+    		@RequestParam("Authorization") String token) {
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -45,11 +39,11 @@ public class EntrenamientoController {
 
     @PostMapping("/crear")
     public ResponseEntity<String> crearEntrenamiento(
-            @RequestHeader("Authorization") String token,
-            @RequestParam("titulo") String titulo,
-            @RequestParam("deporte") String deporte,
-            @RequestParam("fechaInicio") LocalDate fechaInicio,
-            @RequestParam("duracion") int duracion) {
+    		@RequestParam("Authorization") String token,
+    		@RequestParam("titulo") String titulo,
+    		@RequestParam("deporte") String deporte,
+    		@RequestParam("fechaInicio") LocalDate fechaInicio,
+    		@RequestParam("duracion") int duracion) {
         if (!validarToken(token)) {
             return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
         }
@@ -83,8 +77,7 @@ public class EntrenamientoController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos(
-            @RequestHeader("Authorization") String token) {
-    	System.out.println("getmapping 2");
+    		@RequestParam("Authorization") String token) {
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
