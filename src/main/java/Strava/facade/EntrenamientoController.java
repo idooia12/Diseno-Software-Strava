@@ -3,6 +3,7 @@ package Strava.facade;
 import Strava.entity.*;
 import Strava.dto.*;
 import Strava.service.EntrenamientoService;
+import Strava.service.AuthorizationService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,24 +18,41 @@ import java.util.List;
 @RequestMapping("/api/entrenamientos")
 public class EntrenamientoController {
 
-    private final  EntrenamientoService entrenamientoService;
-    
-    public EntrenamientoController (EntrenamientoService entrenamientoService) {
-    	        this.entrenamientoService = entrenamientoService;
+    private final EntrenamientoService entrenamientoService;
+    private final AuthorizationService authorizationService;
+
+    public EntrenamientoController(EntrenamientoService entrenamientoService, AuthorizationService authorizationService) {
+        this.entrenamientoService = entrenamientoService;
+        this.authorizationService = authorizationService;
     }
 
-    //Lista de entrenamientos. (/api/entrenamientos)
-    @GetMapping
-	public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos() {
-		return new ResponseEntity<>(entrenamientoService.getAllEntrenamientos(), HttpStatus.OK);
-	}
+    // Método para validar el token utilizando AuthorizationService
+    private boolean validarToken(String token) {
+        return authorizationService.validateToken(token);
+    }
     
+
+    // Lista de entrenamientos
+    @GetMapping
+    public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos(
+            @RequestHeader("Authorization") String token) {
+        if (!validarToken(token)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+        return new ResponseEntity<>(entrenamientoService.getAllEntrenamientos(), HttpStatus.OK);
+    }
+
     @PostMapping("/crear")
     public ResponseEntity<String> crearEntrenamiento(
+            @RequestHeader("Authorization") String token,
             @RequestParam("titulo") String titulo,
             @RequestParam("deporte") String deporte,
             @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("duracion") int duracion) {
+        if (!validarToken(token)) {
+            return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
+        }
+
         try {
             // Placeholder para obtener el usuario actual
             UsuarioEntity usuario = new UsuarioEntity();
@@ -43,13 +61,13 @@ public class EntrenamientoController {
 
             // Aquí utilizamos los parámetros recibidos para crear el entrenamiento
             entrenamientoService.crearEntrenamiento(
-                usuario,
-                titulo,
-                deporteEnum,
-                5,
-                fechaInicio,
-                LocalTime.now(),
-                duracion
+                    usuario,
+                    titulo,
+                    deporteEnum,
+                    5,
+                    fechaInicio,
+                    LocalTime.now(),
+                    duracion
             );
 
             return new ResponseEntity<>("Sesión de entrenamiento creada exitosamente", HttpStatus.CREATED);
@@ -62,18 +80,21 @@ public class EntrenamientoController {
         }
     }
 
-    
-    // Método GET para obtener todos los entrenamientos
     @GetMapping("/listar")
-    public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos() {
+    public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos(
+            @RequestHeader("Authorization") String token) {
+        if (!validarToken(token)) {
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
+
         try {
             // Obtener la lista de entidades de entrenamientos desde el servicio
             List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.getAllEntrenamientos();
 
             // Convertir entidades a DTOs
             List<SesionEntrenamientoDTO> entrenamientosDTO = entrenamientos.stream()
-                .map(AssemblerMethods::toDTO) // Convierte cada entidad a un DTO
-                .toList();
+                    .map(AssemblerMethods::toDTO) // Convierte cada entidad a un DTO
+                    .toList();
 
             if (!entrenamientosDTO.isEmpty()) {
                 return new ResponseEntity<>(entrenamientosDTO, HttpStatus.OK); // Devolver los DTOs

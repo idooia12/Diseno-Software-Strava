@@ -63,6 +63,7 @@ public class AuthorizationService {
     	return null;
     }
     
+    
     //Logout
     public boolean logout(String token) {
         if (usuariosActivos.containsKey(token)) {
