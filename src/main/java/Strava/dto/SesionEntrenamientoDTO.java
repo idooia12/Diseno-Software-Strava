@@ -1,8 +1,8 @@
 package Strava.dto;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 import Strava.entity.Deporte;
 
@@ -14,7 +14,7 @@ public class SesionEntrenamientoDTO implements Serializable {
 	private String titulo;
 	private Deporte deporte;
 	private int distanciaKm;
-	private Date fechaInicio;
+	private LocalDate fechaInicio;
 	private LocalTime horaInicio;
 	private int duracion;
 	
@@ -44,10 +44,10 @@ public class SesionEntrenamientoDTO implements Serializable {
 	public void setDistanciaKm(int distanciaKm) {
 		this.distanciaKm = distanciaKm;
 	}
-	public Date getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 	public LocalTime getHoraInicio() {

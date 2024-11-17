@@ -1,7 +1,7 @@
 package Strava.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 
 import Strava.entity.Deporte;
@@ -12,8 +12,8 @@ public class RetoDTO implements Serializable {
 
 		private static final long serialVersionUID = 1L;
 		private String nombre;
-		private Date fechaInicio;
-		private Date fechaFin;
+		private LocalDate fechaInicio;
+		private LocalDate fechaFin;
 		private TipoDeReto tipoReto;
 		private int objetivo;
 		private Deporte deporte;
@@ -30,19 +30,19 @@ public class RetoDTO implements Serializable {
 			this.nombre = nombre;
 		}
 		
-		public Date getFechaInicio() {
+		public LocalDate getFechaInicio() {
 			return fechaInicio;
 		}
 		
-		public void setFechaInicio(Date fechaInicio) {
+		public void setFechaInicio(LocalDate fechaInicio) {
 			this.fechaInicio = fechaInicio;
 		}
 		
-		public Date getFechaFin() {
+		public LocalDate getFechaFin() {
 			return fechaFin;
 		}
 		
-		public void setFechaFin(Date fechaFin) {
+		public void setFechaFin(LocalDate fechaFin) {
 			this.fechaFin = fechaFin;
 		}
 		
@@ -70,6 +70,6 @@ public class RetoDTO implements Serializable {
 			this.tipoReto = tipoReto;
 		}
 		public void setDeporte(String string) {
-			this.deporte = deporte;
+			this.deporte = Deporte.fromString(string);
 		}
 }

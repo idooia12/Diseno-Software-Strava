@@ -1,7 +1,7 @@
 package Strava.service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -26,7 +26,7 @@ public class RetoService {
 		return instance;
 	}
 	
-	public void crearReto(UsuarioEntity usuario, String nombre, Date fechaInicio, Date fechaFin,
+	public void crearReto(UsuarioEntity usuario, String nombre, LocalDate fechaInicio, LocalDate fechaFin,
 			int objetivo, Deporte deporteReto) {
 		RetoEntity reto = new RetoEntity();
 		reto.setNombre(nombre);
@@ -39,10 +39,10 @@ public class RetoService {
 	}
 	
 	public List<RetoEntity> getRetosActivos(UsuarioEntity usuario) {
-		Date fechaActual = new Date();
+		LocalDate fechaActual = LocalDate.now();
 		List<RetoEntity> retosActivos = new ArrayList<>();
 		for (RetoEntity reto : this.retos) {
-			if (reto.getFechaInicio().before(fechaActual) && reto.getFechaFin().after(fechaActual)) {
+			if (reto.getFechaInicio().isBefore(fechaActual) && reto.getFechaFin().isAfter(fechaActual)) {
 				if (usuario.getRetosAceptados().contains(reto)){
 					retosActivos.add(reto);
 				}

@@ -1,18 +1,18 @@
 package Strava.entity;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class RetoEntity {
 	
 	private String nombre;
 	private UsuarioEntity usuarioCreador;
-	private Date fechaInicio;
-	private Date fechaFin;
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	private int objetivo;
 	private TipoDeReto tipoReto; 
 	private Deporte deporte;
 	
-	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, Date fechaInicio, Date fechaFin, 
+	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, LocalDate fechaInicio, LocalDate fechaFin, 
 			int objetivo, Deporte deporte, TipoDeReto tipoReto) {
 		super();
 		this.nombre = nombre;
@@ -27,8 +27,8 @@ public class RetoEntity {
 	public RetoEntity() {
 		super();
 		this.nombre = "";
-		this.fechaInicio = new Date(0);
-		this.fechaFin = new Date(0);
+		this.fechaInicio = LocalDate.now();
+		this.fechaFin = LocalDate.now().plusDays(30);
 		this.objetivo = 0;
 		this.deporte = Deporte.running;
 		this.tipoReto = TipoDeReto.DISTANCIA;
@@ -50,19 +50,19 @@ public class RetoEntity {
         this.usuarioCreador = usuarioCreador;
     }
 	
-	public Date getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 	
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 	
-	public Date getFechaFin() {
+	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 	
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
 	

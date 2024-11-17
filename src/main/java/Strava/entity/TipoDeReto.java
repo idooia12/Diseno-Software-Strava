@@ -24,5 +24,3 @@ public enum TipoDeReto {
         throw new IllegalArgumentException("Valor no válido para TipoDeReto: " + valor);
     }
 }
-
-//Realizado con ayuda de ChatGPT

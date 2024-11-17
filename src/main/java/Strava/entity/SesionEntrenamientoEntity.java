@@ -1,20 +1,18 @@
 package Strava.entity;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class SesionEntrenamientoEntity {
 	private UsuarioEntity usuario;
 	private String titulo;
 	private Deporte deporte;
 	private int distanciaKm;
-	private Date fechaInicio;
+	private LocalDate fechaInicio;
 	private LocalTime horaInicio;
 	private int duracion;
 	
-	public SesionEntrenamientoEntity(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, Date fecha_inicio,
+	public SesionEntrenamientoEntity(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, LocalDate fecha_inicio,
 			LocalTime hora_inicio, int duracion) {
 		super();
 		this.usuario = usuario;
@@ -31,7 +29,7 @@ public class SesionEntrenamientoEntity {
 		this.titulo = "";
 		this.deporte = Deporte.running;
 		this.distanciaKm = 0;
-		this.fechaInicio = new Date();
+		this.fechaInicio = LocalDate.now();
 		this.horaInicio = LocalTime.now();
 		this.duracion = 0;
 	}
@@ -68,11 +66,11 @@ public class SesionEntrenamientoEntity {
 		this.distanciaKm = distanciaKm;
 	}
 	
-	public Date getFechaInicio() {
+	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
 	
-	public void setFechaInicio(Date date) {
+	public void setFechaInicio(LocalDate date) {
 		fechaInicio = date;
 	}	
 	

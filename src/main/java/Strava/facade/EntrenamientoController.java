@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.rmi.RemoteException;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class EntrenamientoController {
     public ResponseEntity<String> crearEntrenamiento(
             @RequestParam("titulo") String titulo,
             @RequestParam("deporte") String deporte,
-            @RequestParam("fechaInicio") Date fechaInicio,
+            @RequestParam("fechaInicio") LocalDate fechaInicio,
             @RequestParam("duracion") int duracion) {
         try {
             // Placeholder para obtener el usuario actual

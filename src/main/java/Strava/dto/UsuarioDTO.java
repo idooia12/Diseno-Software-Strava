@@ -1,6 +1,6 @@
 package Strava.dto;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import Strava.entity.*;
@@ -9,7 +9,7 @@ public class UsuarioDTO {
 	private String email;
 	private String nombre;
 	private String contraseña;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private int peso;
 	private int altura;
 	private int FCmax_ppm;
@@ -39,10 +39,10 @@ public class UsuarioDTO {
 	public void setContraseña(String contraseña) {
         this.contraseña = contraseña;
 	}
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public int getPeso() {

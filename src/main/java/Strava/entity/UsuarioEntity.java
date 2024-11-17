@@ -1,7 +1,7 @@
 package Strava.entity;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class UsuarioEntity {
@@ -9,7 +9,7 @@ public class UsuarioEntity {
 	private String email;
 	private String nombre;
 	private String contraseña;
-	private Date fechaNacimiento;
+	private LocalDate fechaNacimiento;
 	private int peso;
 	private int altura;
 	private int FCmax_ppm;
@@ -21,7 +21,7 @@ public class UsuarioEntity {
 	private List<RetoEntity> retosActivos = new ArrayList<>();
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 	
-	public UsuarioEntity(String email, String nombre, Date fechaNacimiento, int peso, int altura, int FCmax_ppm,
+	public UsuarioEntity(String email, String nombre, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
 			int FCrep_ppm, ServicioValidacion servicio) {
 		super();
 		this.email = email;
@@ -40,7 +40,7 @@ public class UsuarioEntity {
 		this.email = "";
 		this.nombre = "";
 		this.contraseña = "";
-		this.fechaNacimiento = new Date();
+		this.fechaNacimiento = LocalDate.parse("2000-01-01");
 		this.peso = 0;
 		this.altura = 0;
 		this.FCmax_ppm = 0;
@@ -72,10 +72,10 @@ public class UsuarioEntity {
 	public void setContraseña(String contraseña) {
         this.contraseña = contraseña;   
     }
-	public Date getFechaNacimiento() {
+	public LocalDate getFechaNacimiento() {
 		return fechaNacimiento;
 	}
-	public void setFechaNacimiento(Date fechaNacimiento) {
+	public void setFechaNacimiento(LocalDate fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
 	public int getPeso() {

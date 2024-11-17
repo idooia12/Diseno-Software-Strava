@@ -1,11 +1,12 @@
 package Strava.service;
 
 import java.rmi.RemoteException;
-import java.util.*;
-
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import Strava.entity.Deporte;
 import Strava.entity.SesionEntrenamientoEntity;
@@ -19,7 +20,7 @@ public class EntrenamientoService {
 
 	
 	
-	public SesionEntrenamientoEntity crearEntrenamiento(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, Date fecha_inicio, LocalTime hora_inicio, int duracion) throws RemoteException {
+	public SesionEntrenamientoEntity crearEntrenamiento(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, LocalDate fecha_inicio, LocalTime hora_inicio, int duracion) throws RemoteException {
 		SesionEntrenamientoEntity sesion = new SesionEntrenamientoEntity(usuario, titulo, deporte, distanciaKm, fecha_inicio, hora_inicio, duracion);
 	    entrenamientos.add(sesion);
 	    usuario.addEntrenamiento(sesion);
