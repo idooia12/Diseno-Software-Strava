@@ -9,13 +9,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
+
 @RestController
 @RequestMapping("/api/entrenamientos")
+@Tag(name = "Entrenamientos Controller", description = "Gestión de sesiones de entrenamiento")
 public class EntrenamientoController {
 
     private final EntrenamientoService entrenamientoService = EntrenamientoService.getInstance();
@@ -27,23 +34,42 @@ public class EntrenamientoController {
     }
     
 
-    // Lista de entrenamientos
+    @Operation(
+            summary = "Obtener entrenamientos",
+            description = "Retorna la lista de todos los entrenamientos disponibles.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Lista de entrenamientos retornada con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping
     public ResponseEntity<List<SesionEntrenamientoEntity>> getAllEntrenamientos(
-    		@RequestParam("Authorization") String token) {
+            @Parameter(description = "Token de autorización", required = true) 
+            	@RequestParam("Token") String token) {
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         return new ResponseEntity<>(entrenamientoService.getAllEntrenamientos(), HttpStatus.OK);
     }
 
+    @Operation(
+            summary = "Crear un entrenamiento",
+            description = "Permite crear una nueva sesión de entrenamiento.",
+            responses = {
+                @ApiResponse(responseCode = "201", description = "Entrenamiento creado con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "400", description = "Datos del entrenamiento inválidos"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @PostMapping("/crear")
     public ResponseEntity<String> crearEntrenamiento(
-    		@RequestParam("Authorization") String token,
-    		@RequestParam("titulo") String titulo,
-    		@RequestParam("deporte") String deporte,
-    		@RequestParam("fechaInicio") LocalDate fechaInicio,
-    		@RequestParam("duracion") int duracion) {
+    		@Parameter(description = "Token de autorización", required = true) @RequestParam("Token") String token,
+            @Parameter(description = "Título del entrenamiento", required = true) @RequestParam("Titulo") String titulo,
+            @Parameter(description = "Deporte del entrenamiento", required = true) @RequestParam("Deporte") String deporte,
+            @Parameter(description = "Fecha de inicio del entrenamiento", required = true) @RequestParam("Fecha de Inicio") LocalDate fechaInicio,
+            @Parameter(description = "Duración del entrenamiento (en minutos)", required = true) @RequestParam("Duracion") int duracion) {
         if (!validarToken(token)) {
             return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
         }
@@ -75,9 +101,21 @@ public class EntrenamientoController {
         }
     }
 
+    
+    @Operation(
+            summary = "Listar entrenamientos",
+            description = "Retorna una lista de entrenamientos en formato DTO.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Lista de entrenamientos retornada con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "204", description = "No hay entrenamientos disponibles"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping("/listar")
     public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos(
-    		@RequestParam("Authorization") String token) {
+            @Parameter(description = "Token de autorización", required = true) 
+            	@RequestParam("Token") String token) {
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

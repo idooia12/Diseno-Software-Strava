@@ -2,10 +2,7 @@ package Strava.facade;
 
 
 import Strava.service.AuthorizationService;
-import Strava.dto.*;
-import Strava.entity.UsuarioEntity;
 
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,22 +16,23 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/auth")
 // Comentarios de Swagger
-@Tag(name = "Authorization Controller", description = "Operations related to user authorization")
+@Tag(name = "Authorization Controller", description = "Operaciones relacionadas con la autenticación de usuarios")
 
 public class AuthorizationController {
     private final AuthorizationService authorizationService = AuthorizationService.getInstance();
    
     @Operation(
-			summary = "Login de usuario", description = "Iniciar sesion", responses = {
+			summary = "Login de usuario", description = "Permite iniciar sesión proporcionando email y contraseña. Retorna un token si el login es exitoso.",
+			responses = {
 					@ApiResponse(responseCode = "200", description = "OK: Login correcto"),
                     @ApiResponse(responseCode = "401", description = "Unauthorized: Credenciales invalidas"),
-                    @ApiResponse(responseCode = "500", description = "Internal server error")
+                    @ApiResponse(responseCode = "500", description = "Error interno del servidor")
 			}
     )
     @PostMapping("/login")
     public ResponseEntity<String> login(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
+    		 @Parameter(description = "Correo electrónico del usuario", required = true) @RequestParam("Email") String email,
+             @Parameter(description = "Contraseña del usuario", required = true) @RequestParam("Password") String password) {
         try {
             String token = authorizationService.login(email, password);
             if (token != null) {
@@ -47,12 +45,20 @@ public class AuthorizationController {
         }
     }
 
-    // Endpoint para validar el token
-
+    @Operation(
+            summary = "Validar token",
+            description = "Verifica si el token proporcionado es válido, es decir, si pertenece a un usuario que ha hecho login con éxito.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Token válido"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping("/validate")
     public ResponseEntity<String> validateToken(
-            @RequestParam("token") String token) {
-        try {
+    		@Parameter(description = "Token del usuario", required = true) 
+    			@RequestParam("Token") String token) {  
+    	try {
             boolean isValid = authorizationService.validateToken(token);
 
             if (isValid) {
@@ -66,9 +72,19 @@ public class AuthorizationController {
     }
 
 
+    @Operation(
+            summary = "Obtener email del usuario logeado",
+            description = "Retorna el email del usuario asociado al token proporcionado.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Email del usuario retornado con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping("/user-email")
     public ResponseEntity<String> getUserEmail(
-            @RequestParam("token") String token) {
+    		@Parameter(description = "Token del usuario", required = true) 
+    			@RequestParam("Token") String token) {
         try {
             String email = authorizationService.getUsuarioFromToken(token).getEmail();
             if (email != null) {
@@ -81,10 +97,21 @@ public class AuthorizationController {
         }
     }
     
+    
+    @Operation(
+            summary = "Cerrar sesión",
+            description = "Permite cerrar la sesión del usuario invalidando su token.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Logout exitoso"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @PostMapping("/logout")
 	public ResponseEntity<String> logout(
-			@RequestParam("token") String token) {
-		try {
+			@Parameter(description = "Token del usuario", required = true) 
+			@RequestParam("Token") String token) {
+    	try {
 			boolean success = authorizationService.logout(token);
 
 			if (success) {
@@ -97,10 +124,10 @@ public class AuthorizationController {
 		}
 	}
     
-    @GetMapping("/prueba")
+    /*@GetMapping("/prueba")
     public ResponseEntity<String> testEndpoint() {
         return new ResponseEntity<>("Funcionando correctamente", HttpStatus.OK);
-    }
+    }*/
     
     
 }

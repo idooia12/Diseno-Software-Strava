@@ -7,9 +7,15 @@ import Strava.entity.RetoEntity;
 import Strava.entity.UsuarioEntity;
 import Strava.service.AuthorizationService;
 import Strava.service.RetoService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -17,6 +23,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/retos")
+@Tag(name = "Retos Controller", description = "Gestión de retos deportivos")
 public class RetoController {
 
     private final RetoService retoService = RetoService.getInstance();
@@ -29,14 +36,24 @@ public class RetoController {
     
 
 
+    @Operation(
+            summary = "Crear un reto",
+            description = "Permite crear un nuevo reto deportivo.",
+            responses = {
+                @ApiResponse(responseCode = "201", description = "Reto creado con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "400", description = "Datos del reto inválidos"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @PostMapping("/crear")
     public ResponseEntity<String> crearReto(
-    		@RequestParam("Authorization") String token,
-    		@RequestParam("nombre") String nombre,
-    		@RequestParam("fecha Inicio") LocalDate fechaInicio,
-    		@RequestParam("fecha Fin") LocalDate fechaFin,
-    		@RequestParam ("Objetivo")int Objetivo,
-    		@RequestParam("deporte") Deporte deporte) {
+    		@Parameter(description = "Token de autorización", required = true) @RequestParam("Token") String token,
+            @Parameter(description = "Nombre del reto", required = true) @RequestParam("Nombre") String nombre,
+            @Parameter(description = "Fecha de inicio del reto", required = true) @RequestParam("Fecha de Inicio") LocalDate fechaInicio,
+            @Parameter(description = "Fecha de fin del reto", required = true) @RequestParam("Fecha de Fin") LocalDate fechaFin,
+            @Parameter(description = "Objetivo del reto (km/minutos)", required = true) @RequestParam("Objetivo del Reto") int Objetivo,
+            @Parameter(description = "Deporte del reto (ciclismo, running, others)", required = true) @RequestParam("Deporte") Deporte deporte) {
         try {
             // Validar el token recibido y obtener el usuario
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
@@ -55,7 +72,6 @@ public class RetoController {
                     deporte
                      // Aquí iría el deporte si se requiere
             );
-
             return new ResponseEntity<>("Reto creado exitosamente", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Datos del reto inválidos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
@@ -65,10 +81,19 @@ public class RetoController {
     }
 
 
-
+    @Operation(
+            summary = "Obtener retos activos",
+            description = "Retorna la lista de retos activos asociados al usuario en la fecha actual.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Lista de retos activos retornada con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "204", description = "No hay retos activos"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping("/activos")
     public ResponseEntity<List<RetoDTO>> obtenerRetosActivos(
-    		@RequestParam("Authorization") String token) {
+            @Parameter(description = "Token de autorización", required = true) @RequestParam("Token") String token) {
         try {
             // Validar el token recibido y obtener el usuario
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
@@ -94,11 +119,22 @@ public class RetoController {
         }
     }
 
-
+    @Operation(
+            summary = "Aceptar un reto",
+            description = "Permite que un usuario acepte un reto especificado por su nombre.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Reto aceptado exitosamente"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "404", description = "Reto no encontrado"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @PostMapping("/aceptar/{retoNombre}")
     public ResponseEntity<String> aceptarReto(
-            @PathVariable String retoNombre,
-            @RequestParam("Authorization") String token) {
+    		 @Parameter(description = "Nombre del reto a aceptar", required = true, example = "Reto Maraton")
+             	@PathVariable String retoNombre,
+             @Parameter(description = "Token de autorización del usuario", required = true)
+             	@RequestParam("Token") String token) {
         try {
             // Validar el token recibido y obtener el usuario
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
@@ -122,11 +158,21 @@ public class RetoController {
     }
 
 
-
+    @Operation(
+            summary = "Consultar retos aceptados",
+            description = "Obtiene la lista de retos que un usuario ha aceptado.",
+            responses = {
+                @ApiResponse(responseCode = "200", description = "Lista de retos aceptados retornada con éxito"),
+                @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "204", description = "No hay retos aceptados"),
+                @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+            }
+        )
     @GetMapping("/aceptados")
     public ResponseEntity<List<RetoDTO>> consultarRetosAceptados(
-    		@RequestParam("Authorization") String token) {
-        try {
+    		 @Parameter(description = "Token de autorización del usuario", required = true)
+             @RequestParam("Token") String token){        
+    	try {
             // Validar el token recibido
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
             if (!validarToken(token)) {
@@ -151,6 +197,7 @@ public class RetoController {
         }
     }
 
+    //Métodos auxiliares
 
     private RetoDTO convertToDTO(RetoEntity reto) {
         RetoDTO dto = new RetoDTO();
@@ -172,8 +219,8 @@ public class RetoController {
     }
     
     
-    @GetMapping("/prueba")
+    /*@GetMapping("/prueba")
     public ResponseEntity<String> testEndpoint() {
         return new ResponseEntity<>("Funcionando correctamente", HttpStatus.OK);
-    }
+    }*/
 }
