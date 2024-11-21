@@ -141,6 +141,7 @@ public class UsuarioEntity {
 		this.retosActivos = retosActivos;
 	}
 	
+	
 	//ANADIR A LISTAS
 	public void addRetoAceptado(RetoEntity reto) {
 		this.retosAceptados.add(reto);

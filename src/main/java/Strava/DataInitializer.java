@@ -38,6 +38,10 @@ public class DataInitializer {
        retoService.addReto(reto2);
        retoService.addReto(reto3);
        retoService.addReto(reto4);
+       usuario1.addRetoAceptado(reto1);
+       usuario1.addRetoAceptado(reto3);
+       usuario1.addRetoAceptado(reto2);
+       usuario3.addRetoAceptado(reto4);
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento

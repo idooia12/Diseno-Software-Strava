@@ -31,6 +31,7 @@ public class AuthorizationService {
 	public void setUsuariosActivos(Map<String, UsuarioEntity> usuariosActivos) {
 		this.usuariosActivos = usuariosActivos;
 	}
+	
 	//Add
 	public void addUsuario(UsuarioEntity usuario) {
 		usuarios.add(usuario);
@@ -83,6 +84,7 @@ public class AuthorizationService {
 		}
 		return null;
     }
+    
     
     public String generateToken(String email) {
         String prefijoMail = email.split("@")[0];

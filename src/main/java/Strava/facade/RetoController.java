@@ -1,6 +1,7 @@
 package Strava.facade;
 
 
+import Strava.dto.AssemblerMethods;
 import Strava.dto.RetoDTO;
 import Strava.entity.Deporte;
 import Strava.entity.RetoEntity;
@@ -184,15 +185,12 @@ public class RetoController {
             }
 
             // Obtener los retos aceptados para el usuario autenticado
-            List<RetoEntity> retosAceptados = retoService.consultarRetosAceptados(usuario);
-            if (retosAceptados.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            List<RetoEntity> retosAceptados = retoService.getRetosAceptados(usuario);
 
             // Convertir los retos a DTOs
             List<RetoDTO> dtos = new ArrayList<>();
             for (RetoEntity reto : retosAceptados) {
-                dtos.add(convertToDTO(reto));
+                dtos.add(AssemblerMethods.retoToDTO(reto));
             }
 
             return new ResponseEntity<>(dtos, HttpStatus.OK);

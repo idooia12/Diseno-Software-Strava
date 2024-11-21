@@ -44,11 +44,16 @@ public class RetoService {
 		return retosActivos;
 	}
 	
+	public List<RetoEntity> getRetosAceptados(UsuarioEntity usuario) {
+		return usuario.getRetosAceptados();
+	}
+	
 	public void aceptarReto(UsuarioEntity usuario, RetoEntity reto) {
 		if (retos.contains(reto)){
 			usuario.addRetoAceptado(reto);
 		}
 	}
+	
 	
 	public List<RetoEntity> consultarRetosAceptados(UsuarioEntity usuario) {
        return usuario.getRetosAceptados();
