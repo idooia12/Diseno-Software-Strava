@@ -26,8 +26,13 @@ import java.util.List;
 @Tag(name = "Retos Controller", description = "Gestión de retos deportivos")
 public class RetoController {
 
-    private final RetoService retoService = RetoService.getInstance();
-    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
+    private final RetoService retoService;
+    private final AuthorizationService authorizationService;
+    
+	public RetoController(RetoService retoService, AuthorizationService authorizationService) {
+		this.retoService = retoService;
+		this.authorizationService = authorizationService;
+	}
 
     // Método para validar el token utilizando AuthorizationService
     private boolean validarToken(String token) {

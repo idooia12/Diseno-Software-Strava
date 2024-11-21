@@ -11,20 +11,12 @@ import Strava.entity.*;
 @Service
 public class RetoService {
 
-	private static RetoService instance;
 	private List<RetoEntity> retos = new ArrayList<>();
 
 
 	private RetoService() {
 	}
 
-	public static RetoService getInstance() {
-		if (instance == null) {
-			instance = new RetoService();
-		}
-
-		return instance;
-	}
 	
 	public void crearReto(UsuarioEntity usuario, String nombre, LocalDate fechaInicio, LocalDate fechaFin,
 			int objetivo, Deporte deporteReto) {

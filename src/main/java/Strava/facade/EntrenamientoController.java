@@ -25,8 +25,14 @@ import java.util.List;
 @Tag(name = "Entrenamientos Controller", description = "Gestión de sesiones de entrenamiento")
 public class EntrenamientoController {
 
-    private final EntrenamientoService entrenamientoService = EntrenamientoService.getInstance();
-    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
+    private final EntrenamientoService entrenamientoService;
+    private final AuthorizationService authorizationService;
+    
+	public EntrenamientoController(EntrenamientoService entrenamientoService,
+			AuthorizationService authorizationService) {
+		this.entrenamientoService = entrenamientoService;
+		this.authorizationService = authorizationService;
+	}
 
     // Método para validar el token utilizando AuthorizationService
     private boolean validarToken(String token) {

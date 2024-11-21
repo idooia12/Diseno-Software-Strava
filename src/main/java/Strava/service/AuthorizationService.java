@@ -11,18 +11,9 @@ import Strava.entity.UsuarioEntity;
 @Service
 public class AuthorizationService {
 	// Atributos
-	private static AuthorizationService instance;
 	 private List<UsuarioEntity> usuarios = new ArrayList<>();
 	 private Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
 	
-	
-	 //Singleton -> Solo existe una instancia de la clase durante la ejecucion del programa
-	public static AuthorizationService getInstance() {
-		if (instance == null) {
-			instance = new AuthorizationService();
-		}
-		return instance;
-	}
 	
 	// Getters y setters
 	public List<UsuarioEntity> getUsuarios() {
@@ -79,8 +70,8 @@ public class AuthorizationService {
         return usuariosActivos.containsKey(token);
     }
     
+    
 	// Metodos auxiliares
-
     public UsuarioEntity getUsuarioFromEmail(String email) {
 		for (UsuarioEntity usuario : usuarios) {
 			if (usuario.getEmail().equals(email)) {

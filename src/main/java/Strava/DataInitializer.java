@@ -24,6 +24,9 @@ public class DataInitializer {
        UsuarioEntity usuario1 = new UsuarioEntity("Manu@deusto.es", "Manu", "pass", LocalDate.of(1990, 11, 17),65, 180, 190, 120, ServicioValidacion.Google);
        UsuarioEntity usuario2 = new UsuarioEntity("Ana@deusto.es", "Ana", "pass",LocalDate.of(2002, 1, 20), 55, 165, 175, 110, ServicioValidacion.Meta);
        UsuarioEntity usuario3 = new UsuarioEntity("Carlos@deusto.es", "Carlos", "pass", LocalDate.of(2024, 3, 15), 80, 175, 185, 125, ServicioValidacion.Google);
+       autorizacionService.addUsuario(usuario1);
+       autorizacionService.addUsuario(usuario2);
+       autorizacionService.addUsuario(usuario3);
        logger.info("Usuarios guardados!");
        
        // Crear retos
@@ -31,6 +34,7 @@ public class DataInitializer {
        RetoEntity reto2 = new RetoEntity("Reto Running Semanal", usuario2,LocalDate.now().minusDays(5),LocalDate.now().minusDays(1), 50, Deporte.running, TipoDeReto.TIEMPO);
        RetoEntity reto3 = new RetoEntity("Maratón Virtual", usuario1,LocalDate.now().minusDays(3),LocalDate.now().plusDays(7), 42, Deporte.running, TipoDeReto.DISTANCIA);
        RetoEntity reto4 = new RetoEntity("Reto MTB", usuario2,LocalDate.now().plusDays(5),LocalDate.now().plusDays(40), 150, Deporte.ciclismo, TipoDeReto.TIEMPO);
+       
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento

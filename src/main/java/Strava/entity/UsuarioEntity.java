@@ -35,7 +35,6 @@ public class UsuarioEntity {
 		this.FCmax_ppm = FCmax_ppm;
 		this.FCrep_ppm = FCrep_ppm;
 		this.servicio = servicio;
-		AuthorizationService.getInstance().addUsuario(this);
 	}
 	
 	public UsuarioEntity() {
@@ -49,8 +48,6 @@ public class UsuarioEntity {
 		this.FCmax_ppm = 0;
 		this.FCrep_ppm = 0;
 		this.servicio = ServicioValidacion.Google;
-		AuthorizationService.getInstance().addUsuario(this);
-
 	}
 	
 	

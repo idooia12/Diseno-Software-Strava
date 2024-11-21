@@ -15,7 +15,6 @@ import Strava.entity.UsuarioEntity;
 @Service
 public class EntrenamientoService {
 	
-	private static EntrenamientoService instance;
     private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 
 	
@@ -40,14 +39,7 @@ public class EntrenamientoService {
 	    }
 		return ultimosEntrenamientos;
 	}
-	
-	public static EntrenamientoService getInstance() {
-		if (instance == null) {
-			instance = new EntrenamientoService();
-		}
 
-		return instance;
-	}
 
 	public List<SesionEntrenamientoEntity> getAllEntrenamientos() {
 		return entrenamientos;

@@ -19,7 +19,12 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "Authorization Controller", description = "Operaciones relacionadas con la autenticación de usuarios")
 
 public class AuthorizationController {
-    private final AuthorizationService authorizationService = AuthorizationService.getInstance();
+    private final AuthorizationService authorizationService;
+    
+ // Inyección de dependencias mediante constructor
+    public AuthorizationController(AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
    
     @Operation(
 			summary = "Login de usuario", description = "Permite iniciar sesión proporcionando email y contraseña. Retorna un token si el login es exitoso.",

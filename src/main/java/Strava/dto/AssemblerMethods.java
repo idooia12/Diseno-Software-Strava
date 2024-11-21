@@ -5,8 +5,12 @@ import Strava.service.AuthorizationService;
 
 
 public class AssemblerMethods {
-    private static AuthorizationService authorizationService= AuthorizationService.getInstance();
+    private final AuthorizationService authorizationService;
 
+    // Inyección de dependencias mediante constructor
+    public AssemblerMethods(AuthorizationService authorizationService) {
+        this.authorizationService = authorizationService;
+    }
 	//Convierte RetoEntity en RetoDTO
 	 public static RetoDTO retoToDTO(RetoEntity retoEntity) {
 	        if (retoEntity == null) {
