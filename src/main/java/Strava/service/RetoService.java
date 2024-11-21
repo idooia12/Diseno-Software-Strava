@@ -27,8 +27,8 @@ public class RetoService {
 		reto.setFechaFin(fechaFin);
 		reto.setObjetivo(objetivo);
 		reto.setDeporte(deporteReto);
-		retos.add(reto);
 		usuario.addRetoAceptado(reto);
+		retos.add(reto);
 	}
 	
 	public List<RetoEntity> getRetosActivos(UsuarioEntity usuario) {
@@ -53,4 +53,8 @@ public class RetoService {
 	public List<RetoEntity> consultarRetosAceptados(UsuarioEntity usuario) {
        return usuario.getRetosAceptados();
     }
+	
+	public void addReto(RetoEntity reto) {
+		retos.add(reto);
+	}
 }

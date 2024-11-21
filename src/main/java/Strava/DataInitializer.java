@@ -34,7 +34,10 @@ public class DataInitializer {
        RetoEntity reto2 = new RetoEntity("Reto Running Semanal", usuario2,LocalDate.now().minusDays(5),LocalDate.now().minusDays(1), 50, Deporte.running, TipoDeReto.TIEMPO);
        RetoEntity reto3 = new RetoEntity("Maratón Virtual", usuario1,LocalDate.now().minusDays(3),LocalDate.now().plusDays(7), 42, Deporte.running, TipoDeReto.DISTANCIA);
        RetoEntity reto4 = new RetoEntity("Reto MTB", usuario2,LocalDate.now().plusDays(5),LocalDate.now().plusDays(40), 150, Deporte.ciclismo, TipoDeReto.TIEMPO);
-       
+       retoService.addReto(reto1);
+       retoService.addReto(reto2);
+       retoService.addReto(reto3);
+       retoService.addReto(reto4);
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento

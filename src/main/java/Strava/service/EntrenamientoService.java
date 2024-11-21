@@ -44,6 +44,10 @@ public class EntrenamientoService {
 	public List<SesionEntrenamientoEntity> getAllEntrenamientos() {
 		return entrenamientos;
 	}
+	
+	public void addEntrenamiento(SesionEntrenamientoEntity sesion) {
+        entrenamientos.add(sesion);
+    }
 
 
 }

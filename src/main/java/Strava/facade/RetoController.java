@@ -58,7 +58,7 @@ public class RetoController {
             @Parameter(description = "Fecha de inicio del reto", required = true) @RequestParam("Fecha de Inicio") LocalDate fechaInicio,
             @Parameter(description = "Fecha de fin del reto", required = true) @RequestParam("Fecha de Fin") LocalDate fechaFin,
             @Parameter(description = "Objetivo del reto (km/minutos)", required = true) @RequestParam("Objetivo del Reto") int Objetivo,
-            @Parameter(description = "Deporte del reto (ciclismo, running, others)", required = true) @RequestParam("Deporte") Deporte deporte) {
+            @Parameter(description = "Deporte del reto (ciclismo, running, others)", required = true) @RequestParam("Deporte") String deporte) {
         try {
             // Validar el token recibido y obtener el usuario
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
@@ -71,11 +71,10 @@ public class RetoController {
             retoService.crearReto(
                     usuario,
                     nombre,
-                    fechaInicio,   //HAY QUE MIRAR LO DE LOS DEPORTES AQUI
+                    fechaInicio,   
                     fechaFin,
                     Objetivo,
-                    deporte
-                     // Aquí iría el deporte si se requiere
+                    Deporte.fromString(deporte)
             );
             return new ResponseEntity<>("Reto creado exitosamente", HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
