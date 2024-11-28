@@ -3,25 +3,40 @@ package Strava.entity;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import Strava.service.AuthorizationService;
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuarios") // "user" is a reserved keyword in H2 database
 
 public class UsuarioEntity {
-
+	@Id
 	private String email;
+	@Column
 	private String nombre;
+	@Column
 	private String contraseña;
+	@Column
 	private LocalDate fechaNacimiento;
+	@Column
 	private int peso;
+	@Column
 	private int altura;
+	@Column
 	private int FCmax_ppm;
+	@Column
 	private int FCrep_ppm;
+	@Column
 	private ServicioValidacion servicio;
-	
-	private List<RetoEntity> retosCreados = new ArrayList<>();
-	private List<RetoEntity> retosAceptados = new ArrayList<>();
-	private List<RetoEntity> retosActivos = new ArrayList<>();
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
+	@OneToMany(mappedBy = "usuario creador", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<RetoEntity> retosCreados = new ArrayList<>();
+	@ManyToMany(mappedBy = "usuarios en reto", cascade = CascadeType.ALL)
+	private List<RetoEntity> retosAceptados = new ArrayList<>();
+	@ManyToMany(mappedBy = "usuarios en reto activo", cascade = CascadeType.ALL)
+	private List<RetoEntity> retosActivos = new ArrayList<>();
 	
 	public UsuarioEntity(String email, String nombre, String contrasena, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
 			int FCrep_ppm, ServicioValidacion servicio) {
@@ -166,12 +181,23 @@ public class UsuarioEntity {
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (this.getClass().getName().equals(obj.getClass().getName())) {
-			return this.email.equals(((UsuarioEntity)obj).email);
-		}		
-		return false;
+	public int hashCode() {
+		return Objects.hash(email, fechaNacimiento);
 	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		UsuarioEntity other = (UsuarioEntity) obj;
+		return Objects.equals(email, other.email) && Objects.equals(fechaNacimiento, other.fechaNacimiento);
+	}
+	
+	
 	
 	
 	

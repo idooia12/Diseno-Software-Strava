@@ -20,6 +20,11 @@ public enum ServicioValidacion {
 		}
 		return Google; // Valor por defecto o manejar de otra manera si no se encuentra la coincidencia
 	}
+	
+	  @Override
+	    public String toString() {
+	        return nombre;
+	    }
 }
 	
 

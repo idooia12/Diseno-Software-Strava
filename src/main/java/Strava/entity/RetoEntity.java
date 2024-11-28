@@ -1,15 +1,38 @@
 package Strava.entity;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "retos")
 public class RetoEntity {
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column
 	private String nombre;
+   
+    @ManyToOne
+    @JoinColumn(name = "usuario_creador_email", nullable = false)
 	private UsuarioEntity usuarioCreador;
+    
+    @Column
 	private LocalDate fechaInicio;
+    
+    @Column
 	private LocalDate fechaFin;
+    
+    @Column
 	private int objetivo;
+    
+    @Enumerated(EnumType.STRING)
+    @Column
 	private TipoDeReto tipoReto; 
+    
+	@Enumerated(EnumType.STRING)
+	@Column
 	private Deporte deporte;
 	
 	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, LocalDate fechaInicio, LocalDate fechaFin, 
@@ -95,5 +118,25 @@ public class RetoEntity {
 		return "Reto [nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", objetivo="
 				+ objetivo + ", deporte=" + deporte + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fechaInicio, id, nombre, usuarioCreador);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		RetoEntity other = (RetoEntity) obj;
+		return Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre) && Objects.equals(usuarioCreador, other.usuarioCreador);
+	}
+	
+	
 	
 }

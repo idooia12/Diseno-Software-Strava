@@ -1,16 +1,37 @@
 package Strava.entity;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
+import java.time.LocalTime;
+import java.util.Objects;
+
+import jakarta.persistence.*;
+@Entity
+@Table(name = "sesiones_entrenamiento")
 public class SesionEntrenamientoEntity {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	
+	@ManyToOne
+	@JoinColumn(name = "usuario_mail", nullable = false)
 	private UsuarioEntity usuario;
+	
+	@Column
 	private String titulo;
+    
+	@Enumerated(EnumType.STRING)
+	@Column
 	private Deporte deporte;
-	private int distanciaKm;
+	@Column
 	private LocalDate fechaInicio;
+	@Column
 	private LocalTime horaInicio;
+	@Column
+	private int distanciaKm;
+    @Column
 	private int duracion;
+
 	
 	public SesionEntrenamientoEntity(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, LocalDate fecha_inicio,
 			LocalTime hora_inicio, int duracion) {
@@ -90,12 +111,30 @@ public class SesionEntrenamientoEntity {
 		this.duracion = duracion;
 	}
 	
-	
-	//OTROS METODOS
 	@Override
 	public String toString() {
 		return "SesionEntrenamientoEntity [titulo=" + titulo + ", deporte=" + deporte + ", distanciaKm=" + distanciaKm
 				+ ", Fecha_inicio=" + fechaInicio + ", Hora_inicio=" + horaInicio + ", duracion=" + duracion + "]";
 	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, titulo, usuario);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SesionEntrenamientoEntity other = (SesionEntrenamientoEntity) obj;
+		return Objects.equals(id, other.id) && Objects.equals(titulo, other.titulo)
+				&& Objects.equals(usuario, other.usuario);
+	}
+	
+	
 	
 }
