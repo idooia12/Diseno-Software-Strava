@@ -3,6 +3,7 @@ package Strava.facade;
 
 import Strava.service.AuthorizationService;
 
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,9 +40,9 @@ public class AuthorizationController {
     		 @Parameter(description = "Correo electrónico del usuario", required = true) @RequestParam("Email") String email,
              @Parameter(description = "Contraseña del usuario", required = true) @RequestParam("Password") String password) {
         try {
-            String token = authorizationService.login(email, password);
+            Optional<String> token = authorizationService.login(email, password);
             if (token != null) {
-                return new ResponseEntity<>(token, HttpStatus.OK);
+                return new ResponseEntity<>(token.get(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>("Credenciales inválidas", HttpStatus.UNAUTHORIZED);
             }

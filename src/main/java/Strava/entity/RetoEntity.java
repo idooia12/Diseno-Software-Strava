@@ -1,6 +1,8 @@
 package Strava.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.*;
@@ -11,6 +13,7 @@ public class RetoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    
     @Column
 	private String nombre;
    
@@ -35,6 +38,23 @@ public class RetoEntity {
 	@Column
 	private Deporte deporte;
 	
+	@ManyToMany
+    @JoinTable(
+        name = "usuariosAceptados",
+        joinColumns = @JoinColumn(name = "reto_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_email")
+    )
+    private List<UsuarioEntity> usuariosAceptados = new ArrayList<>();
+	
+	@ManyToMany
+    @JoinTable(
+        name = "usuariosEnRetoActivo",
+        joinColumns = @JoinColumn(name = "reto_id"),
+        inverseJoinColumns = @JoinColumn(name = "usuario_email")
+    )
+    private List<UsuarioEntity> usuariosEnRetoActivo = new ArrayList<>(); //Tiene que llamarse igual que el mappedby de usuarioEntity
+	
+	//Constructor
 	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, LocalDate fechaInicio, LocalDate fechaFin, 
 			int objetivo, Deporte deporte, TipoDeReto tipoReto) {
 		super();

@@ -1,28 +1,29 @@
 package Strava.service;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import Strava.entity.UsuarioEntity;
+import Strava.dao.UserRepository;
 
 @Service
 public class AuthorizationService {
 	// Atributos
-	 private List<UsuarioEntity> usuarios = new ArrayList<>();
-	 private Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
+    private final UserRepository userRepository;
+    private Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
 	
+	//Constructor
+	public AuthorizationService(UserRepository userRepository) {
+		this.userRepository = userRepository;
+	}
 	
 	// Getters y setters
-	public List<UsuarioEntity> getUsuarios() {
-		return usuarios;
+	public UserRepository getUserRepository() {
+		return userRepository;
 	}
 
-	public void setUsuarios(List<UsuarioEntity> usuarios) {
-		this.usuarios = usuarios;
-	}
 
 	public Map<String, UsuarioEntity> getUsuariosActivos() {
 		return usuariosActivos;
@@ -32,29 +33,31 @@ public class AuthorizationService {
 		this.usuariosActivos = usuariosActivos;
 	}
 	
-	//Add
-	public void addUsuario(UsuarioEntity usuario) {
-		usuarios.add(usuario);
-	}
-
+	//Add Usuario Activo (ha hecho login)
 	public void addUsuarioActivo(String token, UsuarioEntity usuario) {
 		usuariosActivos.put(token, usuario);
 	}
 	
-	 //Login
-    public String login(String email, String password) {
-    	UsuarioEntity usuario = getUsuarioFromEmail(email);
-    	
-    	for (UsuarioEntity user : usuarios) {
-    		if (user.getEmail().equals(email) && password.equals(user.getContraseña())) { //De momento miramos nosotros si coinciden usuario y contraseña
-    			String token = generateToken(email);
-    			addUsuarioActivo(token, usuario);
-    			return token;
-    		}
-    	}
-    	return null;
+	//Add usuario a BD
+    public UsuarioEntity addUsuario(UsuarioEntity usuario) {
+        if (userRepository.findByEmail(usuario.getEmail()).isPresent()) {
+            throw new IllegalArgumentException("El usuario con email " + usuario.getEmail() + " ya existe.");
+        }
+        return userRepository.save(usuario); // Guardar en la base de datos
     }
-    
+	
+	 //Login
+    public Optional<String> login(String email, String password) {
+        Optional<UsuarioEntity> user = userRepository.findByEmail(email);
+    	
+    		if (user.isPresent() && user.get().getEmail().equals(email) && password.equals(user.get().getContraseña())) { //De momento miramos nosotros si coinciden usuario y contraseña
+    			String token = generateToken(email);
+    			addUsuarioActivo(token, user.get());
+    			return Optional.of(token);
+    		} else {
+                return Optional.empty();
+            }
+    }
     
     
     //Logout
@@ -62,8 +65,9 @@ public class AuthorizationService {
         if (usuariosActivos.containsKey(token)) {
             usuariosActivos.remove(token);
             return true;
+        }else {
+            return false;
         }
-        return false;
     }
     
     // Token valido
@@ -74,15 +78,7 @@ public class AuthorizationService {
     
 	// Metodos auxiliares
     public UsuarioEntity getUsuarioFromEmail(String email) {
-		for (UsuarioEntity usuario : usuarios) {
-			if (usuario.getEmail().equals(email)) {
-				return usuario;
-			}
-			else {
-				return null;
-			}
-		}
-		return null;
+        return userRepository.findByEmail(email).orElse(null);
     }
     
     

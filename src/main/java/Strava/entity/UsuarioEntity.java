@@ -9,7 +9,6 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "usuarios") // "user" is a reserved keyword in H2 database
-
 public class UsuarioEntity {
 	@Id
 	private String email;
@@ -31,11 +30,14 @@ public class UsuarioEntity {
 	private ServicioValidacion servicio;
 	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
-	@OneToMany(mappedBy = "usuario creador", cascade = CascadeType.ALL, orphanRemoval = true)
+	
+	@OneToMany(mappedBy = "usuarioCreador", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<RetoEntity> retosCreados = new ArrayList<>();
-	@ManyToMany(mappedBy = "usuarios en reto", cascade = CascadeType.ALL)
+	
+	@ManyToMany(mappedBy = "usuariosAceptados")
 	private List<RetoEntity> retosAceptados = new ArrayList<>();
-	@ManyToMany(mappedBy = "usuarios en reto activo", cascade = CascadeType.ALL)
+	
+	@ManyToMany(mappedBy = "usuariosEnRetoActivo")
 	private List<RetoEntity> retosActivos = new ArrayList<>();
 	
 	public UsuarioEntity(String email, String nombre, String contrasena, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
