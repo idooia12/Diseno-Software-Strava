@@ -119,7 +119,7 @@ public class SesionEntrenamientoEntity {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, titulo, usuario);
+		return Objects.hash(deporte, distanciaKm, duracion, fechaInicio, horaInicio, id, titulo, usuario);
 	}
 
 	@Override
@@ -131,7 +131,9 @@ public class SesionEntrenamientoEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		SesionEntrenamientoEntity other = (SesionEntrenamientoEntity) obj;
-		return Objects.equals(id, other.id) && Objects.equals(titulo, other.titulo)
+		return deporte == other.deporte && distanciaKm == other.distanciaKm && duracion == other.duracion
+				&& Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(horaInicio, other.horaInicio)
+				&& Objects.equals(id, other.id) && Objects.equals(titulo, other.titulo)
 				&& Objects.equals(usuario, other.usuario);
 	}
 	

@@ -6,7 +6,6 @@ import java.time.LocalDate;
 
 import Strava.entity.Deporte;
 import Strava.entity.TipoDeReto;
-import Strava.entity.UsuarioEntity;
 
 public class RetoDTO implements Serializable {
 
@@ -72,4 +71,11 @@ public class RetoDTO implements Serializable {
 		public void setDeporte(String string) {
 			this.deporte = Deporte.fromString(string);
 		}
+		public UsuarioDTO getUsuario() {
+			return usuario;
+		}
+		public void setUsuario(UsuarioDTO usuario) {
+			this.usuario = usuario;
+		}
+		
 }

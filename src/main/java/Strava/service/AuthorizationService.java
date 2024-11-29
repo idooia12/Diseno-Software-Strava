@@ -39,17 +39,17 @@ public class AuthorizationService {
 	}
 	
 	//Add usuario a BD
-    public UsuarioEntity addUsuario(UsuarioEntity usuario) {
+    public Optional<UsuarioEntity> addUsuario(UsuarioEntity usuario) {
         if (userRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("El usuario con email " + usuario.getEmail() + " ya existe.");
+        return Optional.empty(); // Si ya existe un usuario con ese email, no se puede añadir
         }
-        return userRepository.save(usuario); // Guardar en la base de datos
+        userRepository.save(usuario); // Guardar en la base de datos
+        return Optional.of(usuario);
     }
 	
 	 //Login
     public Optional<String> login(String email, String password) {
-        Optional<UsuarioEntity> user = userRepository.findByEmail(email);
-    	
+        Optional<UsuarioEntity> user = userRepository.findByEmail(email);	
     		if (user.isPresent() && user.get().getEmail().equals(email) && password.equals(user.get().getContraseña())) { //De momento miramos nosotros si coinciden usuario y contraseña
     			String token = generateToken(email);
     			addUsuarioActivo(token, user.get());
