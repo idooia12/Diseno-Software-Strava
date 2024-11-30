@@ -21,4 +21,5 @@ public enum Deporte {
 		}
 		return other; // Valor por defecto o manejar de otra manera si no se encuentra la coincidencia
 	}
+	
 }

@@ -21,12 +21,9 @@ public class EntrenamientoService {
     private EntrenamientoRepository entrenamientoRepository;
 	
 	//Crear entrenamiento y guardarlo en la base de datos
-	public SesionEntrenamientoEntity crearEntrenamiento(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, LocalDate fecha_inicio, LocalTime hora_inicio, int duracion) throws RemoteException {
+	public boolean crearEntrenamiento(UsuarioEntity usuario, String titulo, Deporte deporte, int distanciaKm, LocalDate fecha_inicio, LocalTime hora_inicio, int duracion) throws RemoteException {
 		SesionEntrenamientoEntity sesion = new SesionEntrenamientoEntity(usuario, titulo, deporte, distanciaKm, fecha_inicio, hora_inicio, duracion);
-		if (!entrenamientoRepository.findAll().contains(sesion)) {
-			entrenamientoRepository.save(sesion);
-		}
-	    return sesion;
+		return addEntrenamiento(sesion); //False si ya existe el entrenamiento
 	}
 	
 	

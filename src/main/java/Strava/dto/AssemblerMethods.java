@@ -54,9 +54,7 @@ public class AssemblerMethods {
 			usuarioDTO.setAltura(usuarioEntity.getAltura());
 			usuarioDTO.setFCmax_ppm(usuarioEntity.getFCmax_ppm());
 			usuarioDTO.setFCrep_ppm(usuarioEntity.getFCrep_ppm());
-			usuarioDTO.setRetosCreados(usuarioEntity.getRetosCreados());
 			usuarioDTO.setRetosAceptados(usuarioEntity.getRetosAceptados());
-			usuarioDTO.setRetosActivos(usuarioEntity.getRetosActivos());
 			usuarioDTO.setEntrenamientos(usuarioEntity.getEntrenamientos());
 			usuarioDTO.setContraseña(usuarioEntity.getContraseña());
 			usuarioDTO.setServicio(usuarioEntity.getServicio());
@@ -75,9 +73,7 @@ public class AssemblerMethods {
 			usuarioDTO.setAltura(usuarioEntity.getAltura());
 			usuarioDTO.setFCmax_ppm(usuarioEntity.getFCmax_ppm());
 			usuarioDTO.setFCrep_ppm(usuarioEntity.getFCrep_ppm());
-			usuarioDTO.setRetosCreados(usuarioEntity.getRetosCreados());
 			usuarioDTO.setRetosAceptados(usuarioEntity.getRetosAceptados());
-			usuarioDTO.setRetosActivos(usuarioEntity.getRetosActivos());
 			usuarioDTO.setEntrenamientos(usuarioEntity.getEntrenamientos());
 			usuarioDTO.setContraseña(usuarioEntity.getContraseña());
 			usuarioDTO.setServicio(usuarioEntity.getServicio());
@@ -97,9 +93,7 @@ public class AssemblerMethods {
 			usuarioEntity.setAltura(usuarioDTO.getAltura());
 			usuarioEntity.setFCmax_ppm(usuarioDTO.getFCmax_ppm());
 			usuarioEntity.setFCrep_ppm(usuarioDTO.getFCrep_ppm());
-			usuarioEntity.setRetosCreados(usuarioDTO.getRetosCreados());
 			usuarioEntity.setRetosAceptados(usuarioDTO.getRetosAceptados());
-			usuarioEntity.setRetosActivos(usuarioDTO.getRetosActivos());
 			usuarioEntity.setEntrenamientos(usuarioDTO.getEntrenamientos());
 			return usuarioEntity;
 		}

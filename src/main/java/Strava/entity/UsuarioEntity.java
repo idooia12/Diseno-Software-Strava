@@ -28,17 +28,18 @@ public class UsuarioEntity {
 	private int FCrep_ppm;
 	@Column
 	private ServicioValidacion servicio;
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	private List<SesionEntrenamientoEntity> entrenamientos = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "usuarioCreador", cascade = CascadeType.ALL, orphanRemoval = true)
-	private List<RetoEntity> retosCreados = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "usuariosAceptados")
-	private List<RetoEntity> retosAceptados = new ArrayList<>();
+	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @JoinTable( //UsuarioEntity es el propietario de la relación
+        name = "usuariosEnReto", // Nombre de la tabla intermedia
+        joinColumns = @JoinColumn(name = "usuario_email"), // Clave de UsuarioEntity
+        inverseJoinColumns = @JoinColumn(name = "reto_id") // Clave de RetoEntity
+    )
+    private List<RetoEntity> retosAceptados = new ArrayList<>();
 	
-	@ManyToMany(mappedBy = "usuariosEnRetoActivo")
-	private List<RetoEntity> retosActivos = new ArrayList<>();
 	
 	public UsuarioEntity(String email, String nombre, String contrasena, LocalDate fechaNacimiento, int peso, int altura, int FCmax_ppm,
 			int FCrep_ppm, ServicioValidacion servicio) {
@@ -124,13 +125,6 @@ public class UsuarioEntity {
 		this.servicio = servicio;
 	}	
 	
-	public List<RetoEntity> getRetosCreados() {
-		return retosCreados;
-	}
-
-	public void setRetosCreados(List<RetoEntity> retosCreados) {
-		this.retosCreados = retosCreados;
-	}
 	
 
 	public List<RetoEntity> getRetosAceptados() {
@@ -149,28 +143,15 @@ public class UsuarioEntity {
 		this.entrenamientos = entrenamientos;
 	}
 	
-
-	public List<RetoEntity> getRetosActivos() {
-		return retosActivos;
-	}
-
-	public void setRetosActivos(List<RetoEntity> retosActivos) {
-		this.retosActivos = retosActivos;
-	}
-	
 	
 	//ANADIR A LISTAS
-	public void addRetoAceptado(RetoEntity reto) {
-		this.retosAceptados.add(reto);
-	}
+	public void aceptarReto(RetoEntity reto) {
+        if (!this.retosAceptados.contains(reto) && !reto.getUsuariosEnReto().contains(this)) {
+            this.retosAceptados.add(reto);
+            reto.addUsuarioEnReto(this); // Asegura la bidireccionalidad
+        }
+    }
 	
-	public void addRetoCreado(RetoEntity reto) {
-		this.retosCreados.add(reto);
-	}
-	
-	public void addRetoActivo(RetoEntity reto) {
-		this.retosActivos.add(reto);
-	}
 	
 	public void addEntrenamiento(SesionEntrenamientoEntity entrenamiento) {
 		this.entrenamientos.add(entrenamiento);

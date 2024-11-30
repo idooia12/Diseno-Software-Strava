@@ -82,22 +82,22 @@ public class EntrenamientoController {
 
         try {
             // Placeholder para obtener el usuario actual
-            UsuarioEntity usuario = new UsuarioEntity();
-            usuario.setEmail("usuario@ejemplo.com");
-            Deporte deporteEnum = Deporte.fromString(deporte);
+            UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
 
             // Aquí utilizamos los parámetros recibidos para crear el entrenamiento
-            entrenamientoService.crearEntrenamiento(
+           if(entrenamientoService.crearEntrenamiento(
                     usuario,
                     titulo,
-                    deporteEnum,
+                    Deporte.fromString(deporte),
                     5,
                     fechaInicio,
                     LocalTime.now(),
                     duracion
-            );
-
-            return new ResponseEntity<>("Sesión de entrenamiento creada exitosamente", HttpStatus.CREATED);
+            )) {
+               return new ResponseEntity<>("Entrenamiento creado exitosamente", HttpStatus.CREATED);
+           } else {
+              return new ResponseEntity<>("El entrenamiento ya existe", HttpStatus.BAD_REQUEST);
+           }
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Datos de entrenamiento inválidos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (RemoteException e) {
@@ -121,7 +121,7 @@ public class EntrenamientoController {
     @GetMapping("/listar")
     public ResponseEntity<List<SesionEntrenamientoDTO>> getEntrenamientos(
             @Parameter(description = "Token de autorización", required = true) 
-            	@RequestParam("Token") String token) {
+            @RequestParam("Token") String token) {
         if (!validarToken(token)) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }

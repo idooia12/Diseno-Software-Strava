@@ -17,10 +17,12 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.persistence.EntityNotFoundException;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/retos")
@@ -48,6 +50,7 @@ public class RetoController {
             responses = {
                 @ApiResponse(responseCode = "201", description = "Reto creado con éxito"),
                 @ApiResponse(responseCode = "401", description = "Token inválido"),
+                @ApiResponse(responseCode = "409", description = "El reto ya existe"),
                 @ApiResponse(responseCode = "400", description = "Datos del reto inválidos"),
                 @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
@@ -69,15 +72,18 @@ public class RetoController {
             }
 
             // Crear el reto usando los datos recibidos
-            retoService.crearReto(
+            if(retoService.crearReto(
                     usuario,
                     nombre,
                     fechaInicio,   
                     fechaFin,
                     Objetivo,
                     Deporte.fromString(deporte)
-            );
-            return new ResponseEntity<>("Reto creado exitosamente", HttpStatus.CREATED);
+            )) {
+                return new ResponseEntity<>("Reto creado exitosamente", HttpStatus.CREATED);
+            } else {
+               return new ResponseEntity<>("El reto ya existe", HttpStatus.BAD_REQUEST);
+            }
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Datos del reto inválidos: " + e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
@@ -99,25 +105,20 @@ public class RetoController {
     @GetMapping("/activos")
     public ResponseEntity<List<RetoDTO>> obtenerRetosActivos(
             @Parameter(description = "Token de autorización", required = true) @RequestParam("Token") String token) {
-        try {
-            // Validar el token recibido y obtener el usuario
-            UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
-            if (usuario == null) {
-                // Si el token es inválido, devolver 401 Unauthorized
-               // return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
-            }
-            // Obtener los retos activos del usuario
+    	 if (!validarToken(token)) {
+             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+         }
+    	 try {
+    		UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
             List<RetoEntity> retosActivos = retoService.getRetosActivos(usuario);
             if (retosActivos.isEmpty()) {
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             }
-
             // Convertir los retos activos a DTOs
             List<RetoDTO> dtos = new ArrayList<>();
             for (RetoEntity reto : retosActivos) {
                 dtos.add(convertToDTO(reto));
             }
-
             return new ResponseEntity<>(dtos, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -176,24 +177,24 @@ public class RetoController {
     @GetMapping("/aceptados")
     public ResponseEntity<List<RetoDTO>> consultarRetosAceptados(
     		 @Parameter(description = "Token de autorización del usuario", required = true)
-             @RequestParam("Token") String token){        
+             @RequestParam("Token") String token){    
+    	 
     	try {
-            // Validar el token recibido
-            UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
-            if (!validarToken(token)) {
-                return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
-            }
-
-            // Obtener los retos aceptados para el usuario autenticado
-            List<RetoEntity> retosAceptados = retoService.getRetosAceptados(usuario);
-
-            // Convertir los retos a DTOs
-            List<RetoDTO> dtos = new ArrayList<>();
-            for (RetoEntity reto : retosAceptados) {
-                dtos.add(AssemblerMethods.retoToDTO(reto));
-            }
-
+    		if (!validarToken(token)) {
+    			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+    		}
+           UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
+           List<RetoEntity> retosAceptados = retoService.getRetosAceptados(usuario);
+           if (retosAceptados.isEmpty()) {
+               return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+           }
+           List<RetoDTO> dtos = retosAceptados.stream()
+                   .map(AssemblerMethods::retoToDTO)
+                   .collect(Collectors.toList());
+           System.out.println("Retos aceptados convertidos a DTO");
             return new ResponseEntity<>(dtos, HttpStatus.OK);
+    	 } catch (EntityNotFoundException e) {
+    	        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -31,18 +31,18 @@ public class DataInitializer {
        logger.info("Usuarios guardados!");
        
        // Crear retos
-       RetoEntity reto1 = new RetoEntity("Reto Ciclismo de Resistencia", usuario1 ,LocalDate.now(),LocalDate.now().plusDays(5), 200, Deporte.ciclismo, TipoDeReto.DISTANCIA);
-       RetoEntity reto2 = new RetoEntity("Reto Running Semanal", usuario2,LocalDate.now().minusDays(5),LocalDate.now().minusDays(1), 50, Deporte.running, TipoDeReto.TIEMPO);
-       RetoEntity reto3 = new RetoEntity("Maratón Virtual", usuario1,LocalDate.now().minusDays(3),LocalDate.now().plusDays(7), 42, Deporte.running, TipoDeReto.DISTANCIA);
-       RetoEntity reto4 = new RetoEntity("Reto MTB", usuario2,LocalDate.now().plusDays(5),LocalDate.now().plusDays(40), 150, Deporte.ciclismo, TipoDeReto.TIEMPO);
+       RetoEntity reto1 = new RetoEntity("Reto Ciclismo de Resistencia",LocalDate.now(),LocalDate.now().plusDays(5), 200, Deporte.ciclismo, TipoDeReto.DISTANCIA);
+       RetoEntity reto2 = new RetoEntity("Reto Running Semanal",LocalDate.now().minusDays(5),LocalDate.now().minusDays(1), 50, Deporte.running, TipoDeReto.TIEMPO);
+       RetoEntity reto3 = new RetoEntity("Maratón Virtual",LocalDate.now().minusDays(3),LocalDate.now().plusDays(7), 42, Deporte.running, TipoDeReto.DISTANCIA);
+       RetoEntity reto4 = new RetoEntity("Reto MTB",LocalDate.now().plusDays(5),LocalDate.now().plusDays(40), 150, Deporte.ciclismo, TipoDeReto.TIEMPO);
        retoService.addReto(reto1);
        retoService.addReto(reto2);
        retoService.addReto(reto3);
        retoService.addReto(reto4);
-       usuario1.addRetoAceptado(reto1);
-       usuario1.addRetoAceptado(reto3);
-       usuario1.addRetoAceptado(reto2);
-       usuario3.addRetoAceptado(reto4);
+       retoService.aceptarReto(usuario1,reto1);
+       retoService.aceptarReto(usuario1,reto2);
+       retoService.aceptarReto(usuario1,reto3);
+       retoService.aceptarReto(usuario1,reto4);
        logger.info("Retos guardados!");
 
        //Crear sesiones de entrenamiento
@@ -53,10 +53,6 @@ public class DataInitializer {
        entrenamientoService.crearEntrenamiento(usuario2,"Entrenamiento de Velocidad", Deporte.running, 8, LocalDate.now().minusDays(3), LocalTime.now(), 50);
        logger.info("Entrenamientos guardados!");
        
-        };
-        
-       
-        
-        
+        };  
 }
 }

@@ -17,10 +17,6 @@ public class RetoEntity {
     @Column
 	private String nombre;
    
-    @ManyToOne
-    @JoinColumn(name = "usuario_creador_email", nullable = false)
-	private UsuarioEntity usuarioCreador;
-    
     @Column
 	private LocalDate fechaInicio;
     
@@ -38,34 +34,19 @@ public class RetoEntity {
 	@Column
 	private Deporte deporte;
 	
-	@ManyToMany
-    @JoinTable(
-        name = "usuariosAceptados",
-        joinColumns = @JoinColumn(name = "reto_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_email")
-    )
-    private List<UsuarioEntity> usuariosAceptados = new ArrayList<>();
-	
-	@ManyToMany
-    @JoinTable(
-        name = "usuariosEnRetoActivo",
-        joinColumns = @JoinColumn(name = "reto_id"),
-        inverseJoinColumns = @JoinColumn(name = "usuario_email")
-    )
-    private List<UsuarioEntity> usuariosEnRetoActivo = new ArrayList<>(); //Tiene que llamarse igual que el mappedby de usuarioEntity
+	@ManyToMany(mappedBy = "retosAceptados", fetch = FetchType.EAGER, cascade = CascadeType.ALL) // Indica que UsuarioEntity es el propietario
+    private List<UsuarioEntity> usuariosEnReto = new ArrayList<>();
 	
 	//Constructor
-	public RetoEntity(String nombre, UsuarioEntity usuarioCreador, LocalDate fechaInicio, LocalDate fechaFin, 
+	public RetoEntity(String nombre, LocalDate fechaInicio, LocalDate fechaFin, 
 			int objetivo, Deporte deporte, TipoDeReto tipoReto) {
 		super();
 		this.nombre = nombre;
-		this.usuarioCreador = usuarioCreador;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
 		this.objetivo = objetivo;
 		this.deporte = deporte;
 		this.tipoReto = tipoReto;
-		usuarioCreador.addRetoCreado(this);
 	}
 	
 	public RetoEntity() {
@@ -85,14 +66,7 @@ public class RetoEntity {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	
-	public UsuarioEntity getUsuarioCreador() {
-		return usuarioCreador;
-	}
-	
-	public void setUsuarioCreador(UsuarioEntity usuarioCreador) {
-        this.usuarioCreador = usuarioCreador;
-    }
+
 	
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
@@ -133,15 +107,34 @@ public class RetoEntity {
 	public void setTipoReto(TipoDeReto tipoReto) {
 		this.tipoReto = tipoReto;
 	}
+	
+	
+	public List<UsuarioEntity> getUsuariosEnReto() {
+		return usuariosEnReto;
+	}
+	
+	public Long getId() {
+		return id;
+	}
+	
+	public void addUsuarioEnReto(UsuarioEntity usuario) {
+		this.usuariosEnReto.add(usuario);
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Reto [nombre=" + nombre + ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", objetivo="
 				+ objetivo + ", deporte=" + deporte + "]";
 	}
 
+	
+
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(fechaInicio, id, nombre, usuarioCreador);
+		return Objects.hash(deporte, fechaFin, fechaInicio, nombre, objetivo, tipoReto);
 	}
 
 	@Override
@@ -153,10 +146,15 @@ public class RetoEntity {
 		if (getClass() != obj.getClass())
 			return false;
 		RetoEntity other = (RetoEntity) obj;
-		return Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(id, other.id)
-				&& Objects.equals(nombre, other.nombre) && Objects.equals(usuarioCreador, other.usuarioCreador);
+		return deporte == other.deporte && Objects.equals(fechaFin, other.fechaFin)
+				&& Objects.equals(fechaInicio, other.fechaInicio) && Objects.equals(nombre, other.nombre)
+				&& objetivo == other.objetivo && tipoReto == other.tipoReto;
 	}
-	
-	
-	
+
+	//El reto existe por nombre, fechaInicio y fechaFin
+	public boolean retoRepetido(RetoEntity reto) {
+		return this.nombre.equals(reto.getNombre()) && this.fechaInicio.equals(reto.getFechaInicio())
+				&& this.fechaFin.equals(reto.getFechaFin());
+	}	
+
 }
