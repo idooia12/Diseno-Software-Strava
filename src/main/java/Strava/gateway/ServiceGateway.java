@@ -8,14 +8,14 @@ import org.springframework.stereotype.Component;
 public class ServiceGateway {
 
     private final MetaGateway metaServiceGateway;
-    private final GoogleGateway googleServiceGateway;
+ //   private final GoogleGateway googleServiceGateway;
     private final AuthorizationService authorizationService;
 
     public ServiceGateway(MetaGateway metaServiceGateway,
     					  GoogleGateway googleServiceGateway,
                           AuthorizationService authorizationService) {
         this.metaServiceGateway = metaServiceGateway;
-        this.googleServiceGateway = googleServiceGateway;
+ //       this.googleServiceGateway = googleServiceGateway;
         this.authorizationService = authorizationService;
     }
     
