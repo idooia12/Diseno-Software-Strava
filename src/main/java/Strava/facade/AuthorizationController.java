@@ -38,7 +38,8 @@ public class AuthorizationController {
     public ResponseEntity<String> login(
         @Parameter(description = "Correo electrónico del usuario", required = true) @RequestParam("Email") String email,
         @Parameter(description = "Contraseña del usuario", required = true) @RequestParam("Password") String password,
-        @Parameter(description = "Clave del servicio (META/GOOGLE)", required = true) @RequestParam("ServiceKey") String key) {
+        @Parameter(description = "Clave del servicio (META/GOOGLE)", required = true) @RequestParam("ServiceKey") String key
+        ) {
 
         try {
             boolean isAuthenticated = serviceGateway.login(email, password, key);

@@ -13,7 +13,7 @@ import java.net.Socket;
 public class MetaGateway {
 
     private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Meta
-    private int serverPort = 12345;       // Cambia por el puerto real del servidor de Meta
+    private int serverPort = 9000;       // Cambia por el puerto real del servidor de Meta
     private final String DELIMITER = "#";
 
     public void setInstance(String servIP, int servPort) {
