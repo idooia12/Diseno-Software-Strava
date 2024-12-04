@@ -61,6 +61,7 @@ public class MetaGateway {
      */
     public boolean login(String email, String password) {
         String mensaje = "validar" + DELIMITER + email + DELIMITER + password;
+        UsuarioEntity usuarioEntity = null;
         boolean resultado = false;
 
         try (Socket socket = new Socket(serverIP, serverPort);
@@ -75,13 +76,26 @@ public class MetaGateway {
             String respuesta = in.readUTF();
             System.out.println(" - Response from Meta server: " + respuesta);
 
-            resultado = "true".equalsIgnoreCase(respuesta);
+            // Procesar la respuesta del servidor para construir un UsuarioEntity
+            if (respuesta != null && !respuesta.equals("null")) {
+                String[] partes = respuesta.split(DELIMITER);
+                if (partes.length >= 2) {
+                    usuarioEntity = new UsuarioEntity();
+                    usuarioEntity.setEmail(partes[0]);  // Primer elemento es el email
+                    usuarioEntity.setContraseña(partes[1]);  // Segundo elemento es la contraseña
+                    // Agregar otros campos necesarios aqu
+                    resultado = true;
+                }
+			} 
         } catch (Exception e) {
             System.err.println("# MetaGateway error in login: " + e.getMessage());
         }
+        return resultado;
 
-        return resultado;	
+        //return usuarioEntity; // Devuelve el usuario o null si falló
     }
+
+
     
     /**
      * Obtiene un usuario por su email desde el servidor Meta.
@@ -106,13 +120,19 @@ public class MetaGateway {
             String respuesta = in.readUTF();
             System.out.println("Respuesta del servidor Meta: " + respuesta);
 
-            // Procesar la respuesta y asignar los datos al UsuarioEntity
+            // Validar y procesar la respuesta
             if (respuesta != null && !respuesta.equals("null")) {
                 String[] partes = respuesta.split(DELIMITER);
-                usuarioEntity = new UsuarioEntity();
-                usuarioEntity.setEmail(partes[0]);  // Asumiendo que la respuesta contiene el email
-                usuarioEntity.setContraseña(partes[1]);  // Asumiendo que la respuesta contiene la contraseña
-                // Si hay más campos, asignarlos aquí
+                if (partes.length >= 2) { // Asegúrate de que hay al menos dos partes
+                    usuarioEntity = new UsuarioEntity();
+                    usuarioEntity.setEmail(partes[0]);  // Primer elemento es el email
+                    usuarioEntity.setContraseña(partes[1]);  // Segundo elemento es la contraseña
+                    // Si hay más campos, procesarlos aquí
+                } else {
+                    System.err.println("Respuesta inválida del servidor Meta: No contiene suficientes partes");
+                }
+            } else {
+                System.err.println("Respuesta inválida o nula recibida del servidor Meta");
             }
 
         } catch (Exception e) {
@@ -121,7 +141,7 @@ public class MetaGateway {
 
         return usuarioEntity;
     }
-    
+
 
 
 }
