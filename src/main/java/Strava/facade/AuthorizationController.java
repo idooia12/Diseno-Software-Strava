@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/auth")
 @Tag(name = "Authorization Controller", description = "Operaciones relacionadas con la autenticación de usuarios")
 public class AuthorizationController {
-
+//Cambio
     private final ServiceGateway serviceGateway;
     private final AuthorizationService authorizationService;
 

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ServiceGateway {
-
+//Canbui
     private final MetaGateway metaServiceGateway;
     private final GoogleGateway googleServiceGateway;
     private final AuthorizationService authorizationService;
