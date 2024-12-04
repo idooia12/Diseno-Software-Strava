@@ -21,6 +21,9 @@ public class RetoService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private EntrenamientoService entrenamientoService;
 
 	private RetoService() {
 	}
@@ -76,4 +79,25 @@ public class RetoService {
 	    retoRepository.save(reto); // Guardamos el reto si no hay duplicados
 	    return true;
 	}
+	
+	//Obtener progreso de usuario en un reto
+	public int getProgresoUsuario(UsuarioEntity usuario, RetoEntity reto) {
+		int progreso = 0;
+		List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.getEntrenamientosEntreFechas(usuario, reto.getFechaInicio(), reto.getFechaFin());
+		for (SesionEntrenamientoEntity entrenamiento : entrenamientos) {
+			if (reto.getTipoReto() == TipoDeReto.DISTANCIA) {
+				if (reto.getDeporte().equals(entrenamiento.getDeporte())) {
+					progreso += entrenamiento.getDistanciaKm();
+				}
+			} else if (reto.getTipoReto() == TipoDeReto.TIEMPO) {
+				if (reto.getDeporte().equals(entrenamiento.getDeporte())) {
+					progreso += entrenamiento.getDuracion();
+				}
+			}
+		}
+		int progresoPorcentaje = (progreso * 100) / reto.getObjetivo();
+		return progresoPorcentaje;
+	}
+	
+	
 }

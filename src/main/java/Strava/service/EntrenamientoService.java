@@ -52,6 +52,10 @@ public class EntrenamientoService {
 		return false;		
     }
 
+	//Obtener entrenamientos de un usuario entre 2 fechas
+	public List<SesionEntrenamientoEntity> getEntrenamientosEntreFechas(UsuarioEntity usuario,LocalDate startDate, LocalDate endDate) {
+        return entrenamientoRepository.findByUsuarioAndFechaInicioBetween(usuario, startDate, endDate);
+    }
 
 }
 
