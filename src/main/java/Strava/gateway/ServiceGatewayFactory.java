@@ -1,6 +1,7 @@
 package Strava.gateway;
 
 import jakarta.inject.Singleton;
+import Strava.entity.ServicioValidacion;
 import Strava.entity.ServicioValidacionEnum;
 
 
@@ -20,7 +21,7 @@ public class ServiceGatewayFactory {
         return instance;
     }
 
-    public ServiceGatewayInterface crearGateway(ServicioValidacionEnum tipo) {
+    public ServiceGatewayInterface crearGateway(ServicioValidacion tipo) {
         switch (tipo) {
             case Google:
                 return new GoogleGateway();
