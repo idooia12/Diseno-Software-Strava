@@ -10,7 +10,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 
 @Component
-public class MetaGateway {
+public class MetaGateway implements ServiceGatewayInterface  {
 
     private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Meta
     private int serverPort = 9000;       // Cambia por el puerto real del servidor de Meta
@@ -142,7 +142,12 @@ public class MetaGateway {
         return usuarioEntity;
     }
 
-
-
+    @Override
+    public boolean validarUsuario(String email, String password) {
+        // Lógica de validación con Meta
+        System.out.println("Validando usuario con Meta");
+        return email.endsWith("@meta.com"); // Ejemplo simple
+    }
 }
+
 
