@@ -37,6 +37,7 @@ public class ServiceGateway {
 
         if (isAuthenticated) {
             String token = authorizationService.generateToken(email);
+            System.out.println("Token generado: " + token);
             authorizationService.addUsuarioActivo(token, authorizationService.getUsuarioFromEmail(email));
             return true;
         }

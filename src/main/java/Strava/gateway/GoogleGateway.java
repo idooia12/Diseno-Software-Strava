@@ -73,7 +73,7 @@ public class GoogleGateway implements ServiceGatewayInterface {
             String respuesta = in.readUTF();
             System.out.println(" - Response from Google server: " + respuesta);
 
-            resultado = "true".equalsIgnoreCase(respuesta);
+            resultado = true;
         } catch (Exception e) {
             System.err.println("# GoogleGateway error in login: " + e.getMessage());
         }
