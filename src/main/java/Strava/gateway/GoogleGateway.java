@@ -10,6 +10,7 @@ import Strava.entity.UsuarioEntity;
 @Component
 public class GoogleGateway {
 
+	/*
     private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Google
     private int serverPort = 9100;       // Cambia por el puerto real del servidor de Google
     private final String DELIMITER = "#";
@@ -20,14 +21,15 @@ public class GoogleGateway {
         System.out.println("GoogleGateway reconfigurado con IP: " + serverIP + " y puerto: " + serverPort);
     }
     
-    
+    */
+	
     /**
      * Valida si un usuario está registrado en el sistema Google.
      *
      * @param email El correo del usuario.
      * @return true si está registrado, false de lo contrario.
      */
-    public boolean validar(String email) {
+   /* public boolean validar(String email) {
         String mensaje = "registrado" + DELIMITER + email;
         boolean resultado = false;
 
@@ -50,6 +52,7 @@ public class GoogleGateway {
         return resultado;
     }
 
+    */
     /**
      * Intenta autenticar un usuario en el sistema Google.
      *
@@ -57,7 +60,7 @@ public class GoogleGateway {
      * @param password La contraseña del usuario.
      * @return true si las credenciales son válidas, false de lo contrario.
      */
-    public boolean login(String email, String password) {
+    /*public boolean login(String email, String password) {
         String mensaje = "validar" + DELIMITER + email + DELIMITER + password;
         boolean resultado = false;
 
@@ -79,15 +82,15 @@ public class GoogleGateway {
         }
         return resultado;    
     }
-    
-    /**
+    */
+	/**
      * Obtiene un usuario por su email desde el servidor Google.
      *
      * @param email El correo electrónico del usuario.
      * @param key   La clave de autenticación.
      * @return Un objeto UsuarioEntity con la información del usuario.
      */
-    public UsuarioEntity getUsuarioByEmail(String email, String key) {
+   /* public UsuarioEntity getUsuarioByEmail(String email, String key) {
         String mensaje = "obtenerUsuario" + DELIMITER + email + DELIMITER + key;
         UsuarioEntity usuarioEntity = null;
 
@@ -116,6 +119,7 @@ public class GoogleGateway {
         }
         return usuarioEntity;
     }
+    */
 
 }
 

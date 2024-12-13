@@ -5,35 +5,47 @@ import Strava.service.AuthorizationService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceGateway implements ServiceGatewayInterface{
-//Canbui
+public class ServiceGateway implements ServiceGatewayInterface {
+
     private final MetaGateway metaServiceGateway;
     private final GoogleGateway googleServiceGateway;
     private final AuthorizationService authorizationService;
 
     public ServiceGateway(MetaGateway metaServiceGateway,
-    					  GoogleGateway googleServiceGateway,
+                          GoogleGateway googleServiceGateway,
                           AuthorizationService authorizationService) {
         this.metaServiceGateway = metaServiceGateway;
         this.googleServiceGateway = googleServiceGateway;
         this.authorizationService = authorizationService;
     }
-    
 
+    @Override
     public boolean validar(String email, String key) {
-        return switch (key) {
-        	case "GOOGLE" -> googleServiceGateway.validar(email);
-            case "META" -> metaServiceGateway.validar(email);
-            default -> throw new IllegalArgumentException("Unexpected service key: " + key);
-        };
+        // Lógica de validación
+        switch (key) {
+        //    case "GOOGLE":
+      //          return googleServiceGateway.validar(email, key);  // Usamos googleServiceGateway
+            case "META":
+                return metaServiceGateway.validar(email, key);  // Usamos metaServiceGateway
+            default:
+                throw new IllegalArgumentException("Unexpected service key: " + key);
+        }
     }
 
+    @Override
     public boolean login(String email, String password, String key) {
-        boolean isAuthenticated = switch (key) {
-           	case "GOOGLE" -> googleServiceGateway.login(email, password);
-            case "META" -> metaServiceGateway.login(email, password);
-            default -> throw new IllegalArgumentException("Unexpected service key: " + key);
-        };
+        // Lógica de login
+        boolean isAuthenticated = false;
+        switch (key) {
+          //  case "GOOGLE":
+        //        isAuthenticated = googleServiceGateway.login(email, password, key);  // Usamos googleServiceGateway
+          //      break;
+            case "META":
+                isAuthenticated = metaServiceGateway.login(email, password, key);  // Usamos metaServiceGateway
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected service key: " + key);
+        }
 
         if (isAuthenticated) {
             String token = authorizationService.generateToken(email);
@@ -44,19 +56,30 @@ public class ServiceGateway implements ServiceGatewayInterface{
         return false;
     }
 
+    @Override
     public void setInstance(String servIP, int servPort, String key) {
         switch (key) {
-        	case "GOOGLE" -> googleServiceGateway.setInstance(servIP, servPort);
-            case "META" -> metaServiceGateway.setInstance(servIP, servPort);
-            default -> throw new IllegalArgumentException("Unexpected service key: " + key);
+        //    case "GOOGLE":
+        //        googleServiceGateway.setInstance(servIP, servPort);  // Configuramos Google
+        //        break;
+            case "META":
+                metaServiceGateway.setInstance(servIP, servPort, key);  // Configuramos Meta
+                break;
+            default:
+                throw new IllegalArgumentException("Unexpected service key: " + key);
         }
     }
-    
+
+    @Override
     public UsuarioEntity getUsuarioByEmail(String email, String key) {
-        return switch (key) {
-        	case "GOOGLE" -> googleServiceGateway.getUsuarioByEmail(email, key);
-        	case "META" -> metaServiceGateway.getUsuarioByEmail(email, key);
-            default -> throw new IllegalArgumentException("Unexpected service key: " + key);
-        };
+        // Lógica para obtener el usuario por email
+        switch (key) {
+        //    case "GOOGLE":
+       //         return googleServiceGateway.getUsuarioByEmail(email, key);
+            case "META":
+                return metaServiceGateway.getUsuarioByEmail(email, key);
+            default:
+                throw new IllegalArgumentException("Unexpected service key: " + key);
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
 import java.net.Socket;
 
 @Component
-public class MetaGateway { 
+public class MetaGateway implements ServiceGatewayInterface{ 
 
   
 
@@ -19,7 +19,7 @@ public class MetaGateway {
     private int serverPort = 9000;       // Cambia por el puerto real del servidor de Meta
     private final String DELIMITER = "#";
 
-    public void setInstance(String servIP, int servPort) {
+    public void setInstance(String servIP, int servPort, String key) {
         this.serverIP = servIP;
         this.serverPort = servPort;
         System.out.println("MetaGateway reconfigurado con IP: " + serverIP + " y puerto: " + serverPort);
@@ -31,7 +31,7 @@ public class MetaGateway {
      * @param email El correo del usuario.
      * @return true si está registrado, false de lo contrario.
      */
-    public boolean validar(String email) {
+    public boolean validar(String email,String key) {
         String mensaje = "registrado" + DELIMITER + email;
         boolean resultado = false;
 
@@ -62,7 +62,7 @@ public class MetaGateway {
      * @param password La contraseña del usuario.
      * @return true si las credenciales son válidas, false de lo contrario.
      */
-    public boolean login(String email, String password) {
+    public boolean login(String email, String password, String key) {
         String mensaje = "validar" + DELIMITER + email + DELIMITER + password;
         boolean resultado = false;
 
@@ -139,6 +139,7 @@ public class MetaGateway {
 
         return usuarioEntity;
     }
+
 
 
 
