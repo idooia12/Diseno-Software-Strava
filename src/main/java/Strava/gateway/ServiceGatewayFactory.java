@@ -32,3 +32,7 @@ public class ServiceGatewayFactory {
         }
     }
 }
+
+
+//User repsoitory si no lo encuentra devuelve un no encontrado, cerre el getway segun el tipo de login,
+//Controller tien que haber regitrar.

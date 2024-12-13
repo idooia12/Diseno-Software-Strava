@@ -20,7 +20,8 @@ public class AuthorizationService {
     // Atributos
     private final UserRepository userRepository;
     private final Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
-
+    private final ServiceGatewayFactory factory = ServiceGatewayFactory.getInstance();
+    
     // Constructor
     public AuthorizationService(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -88,7 +89,6 @@ public class AuthorizationService {
     }
     
     
-    private final ServiceGatewayFactory factory = ServiceGatewayFactory.getInstance();
 
     public boolean registrarUsuario(String email, String password, ServicioValidacion tipo) {
         ServiceGatewayInterface gateway = factory.crearGateway(tipo);
