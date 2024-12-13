@@ -4,15 +4,18 @@ package Strava.gateway;
 import org.springframework.stereotype.Component;
 
 import Strava.entity.UsuarioEntity;
+import Strava.service.AuthorizationService;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.net.Socket;
 
 @Component
-public class MetaGateway implements ServiceGatewayInterface  {
+public class MetaGateway { 
 
-    private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Meta
+  
+
+	private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Meta
     private int serverPort = 9000;       // Cambia por el puerto real del servidor de Meta
     private final String DELIMITER = "#";
 
@@ -137,12 +140,9 @@ public class MetaGateway implements ServiceGatewayInterface  {
         return usuarioEntity;
     }
 
-    @Override
-    public boolean validarUsuario(String email, String password) {
-        // Lógica de validación con Meta
-        System.out.println("Validando usuario con Meta");
-        return email.endsWith("@meta.com"); // Ejemplo simple
-    }
+
+
+
 }
 
 

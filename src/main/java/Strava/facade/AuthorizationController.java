@@ -2,6 +2,7 @@ package Strava.facade;
 
 import Strava.service.AuthorizationService;
 import Strava.gateway.ServiceGateway;
+import Strava.gateway.ServiceGatewayFactory;
 import Strava.dao.*;
 import Strava.entity.UsuarioEntity;
 
@@ -26,6 +27,9 @@ public class AuthorizationController {
     private final ServiceGateway serviceGateway;
     private final AuthorizationService authorizationService;
     private final UserRepository userRepository;
+    @Autowired
+    private ServiceGatewayFactory serviceGatewayFactory;  // Siempre se inyectará la misma instancia de FactoryGateway
+
 
     // Constructor con inyección de dependencias
     public AuthorizationController(ServiceGateway serviceGateway, AuthorizationService authorizationService,UserRepository userRepository) {
@@ -62,6 +66,7 @@ public class AuthorizationController {
             else {
             	//AQUI VALIDO CON EL GATEWAY 
             	System.out.println("Usuario encontrado en la BBDD");
+            	ServiceGateway serviceGateway = (ServiceGateway) serviceGatewayFactory.getServiceGateway(key);
             	 boolean isAuthenticated = serviceGateway.login(email, password, key);
                  if (isAuthenticated) {
                      String token = authorizationService.generateToken(email);

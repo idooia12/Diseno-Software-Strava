@@ -9,9 +9,7 @@ import org.springframework.stereotype.Service;
 import Strava.entity.UsuarioEntity;
 import Strava.dao.UserRepository;
 
-import Strava.gateway.ServiceGatewayInterface;
-import Strava.gateway.ServiceGatewayFactory;
-import Strava.entity.ServicioValidacion;
+
 
 
 
@@ -20,7 +18,6 @@ public class AuthorizationService {
     // Atributos
     private final UserRepository userRepository;
     private final Map<String, UsuarioEntity> usuariosActivos = new HashMap<>(); // Mapa de tokens activos y su usuario correspondiente
-    private final ServiceGatewayFactory factory = ServiceGatewayFactory.getInstance();
     
     // Constructor
     public AuthorizationService(UserRepository userRepository) {
@@ -88,11 +85,4 @@ public class AuthorizationService {
         return usuariosActivos.get(token);
     }
     
-    
-
-    public boolean registrarUsuario(String email, String password, ServicioValidacion tipo) {
-        ServiceGatewayInterface gateway = factory.crearGateway(tipo);
-        return gateway.validarUsuario(email, password);
-    }
-
 }

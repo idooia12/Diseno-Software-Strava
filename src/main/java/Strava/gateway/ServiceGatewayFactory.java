@@ -1,38 +1,35 @@
 package Strava.gateway;
 
-import jakarta.inject.Singleton;
-import Strava.entity.ServicioValidacion;
+import org.springframework.stereotype.Component;
 
-@Singleton
+@Component
 public class ServiceGatewayFactory {
 
-    // Instancia única (Singleton)
-    private static ServiceGatewayFactory instance;
+    private final MetaGateway metaServiceGateway;
+    private final GoogleGateway googleServiceGateway;
 
-    // Constructor privado para evitar la creación directa de instancias
-    private ServiceGatewayFactory() {
+    // Constructor que inyecta las dependencias de MetaGateway y GoogleGateway
+    public ServiceGatewayFactory(MetaGateway metaServiceGateway, GoogleGateway googleServiceGateway) {
+        this.metaServiceGateway = metaServiceGateway;
+        this.googleServiceGateway = googleServiceGateway;
     }
 
-    
-    public static synchronized ServiceGatewayFactory getInstance() {
-        if (instance == null) {
-            instance = new ServiceGatewayFactory();
-        }
-        return instance;
-    }
-
-    public ServiceGatewayInterface crearGateway(ServicioValidacion tipo) {
-        switch (tipo) {
-            case Google:
-                return new GoogleGateway(); // Asegúrate de que esta clase implemente ServiceGatewayInterface
-            case Meta:
-                return new MetaGateway(); // Asegúrate de que esta clase implemente ServiceGatewayInterface
+    /**
+     * Devuelve el servicio adecuado (Meta o Google) según el string que se pase.
+     * 
+     * @param serviceKey El string que indica el tipo de servicio ("META" o "GOOGLE").
+     * @return El servicio seleccionado (MetaGateway o GoogleGateway).
+     */
+    public Object getServiceGateway(String serviceKey) {
+        switch (serviceKey.toUpperCase()) {
+            case "GOOGLE":
+                return googleServiceGateway;  // Retorna la instancia de GoogleGateway
+            case "META":
+                return metaServiceGateway;    // Retorna la instancia de MetaGateway
             default:
-                throw new IllegalArgumentException("Tipo de servicio no soportado: " + tipo);
+                throw new IllegalArgumentException("Servicio no soportado: " + serviceKey);
         }
     }
 }
 
 
-//User repsoitory si no lo encuentra devuelve un no encontrado, cerre el getway segun el tipo de login,
-//Controller tien que haber regitrar.

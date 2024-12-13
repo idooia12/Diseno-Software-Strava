@@ -5,7 +5,7 @@ import Strava.service.AuthorizationService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class ServiceGateway {
+public class ServiceGateway implements ServiceGatewayInterface{
 //Canbui
     private final MetaGateway metaServiceGateway;
     private final GoogleGateway googleServiceGateway;

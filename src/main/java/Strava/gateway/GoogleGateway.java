@@ -8,7 +8,7 @@ import java.net.Socket;
 import Strava.entity.UsuarioEntity;
 
 @Component
-public class GoogleGateway implements ServiceGatewayInterface {
+public class GoogleGateway {
 
     private String serverIP = "127.0.0.1"; // Cambia por la IP real del servidor de Google
     private int serverPort = 9100;       // Cambia por el puerto real del servidor de Google
@@ -117,12 +117,5 @@ public class GoogleGateway implements ServiceGatewayInterface {
         return usuarioEntity;
     }
 
-
-    @Override
-    public boolean validarUsuario(String email, String password) {
-        // Lógica de validación con Google
-        System.out.println("Validando usuario con Google");
-        return email.endsWith("@gmail.com"); // Ejemplo simple
-    }
 }
 
