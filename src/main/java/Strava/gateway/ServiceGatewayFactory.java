@@ -22,8 +22,8 @@ public class ServiceGatewayFactory {
      */
     public ServiceGatewayInterface getServiceGateway(String serviceKey) {
         switch (serviceKey.toUpperCase()) {
-     //       case "GOOGLE":
-       //         return googleServiceGateway;  // Retorna la instancia de GoogleGateway
+            case "GOOGLE":
+                return googleServiceGateway;  // Retorna la instancia de GoogleGateway
             case "META":
                 return metaServiceGateway;    // Retorna la instancia de MetaGateway
             default:

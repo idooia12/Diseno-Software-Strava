@@ -56,7 +56,7 @@ public class ServiceGateway implements ServiceGatewayInterface {
         return false;
     }
 
-    @Override
+    
     public void setInstance(String servIP, int servPort, String key) {
         switch (key) {
         //    case "GOOGLE":
@@ -70,7 +70,7 @@ public class ServiceGateway implements ServiceGatewayInterface {
         }
     }
 
-    @Override
+    
     public UsuarioEntity getUsuarioByEmail(String email, String key) {
         // Lógica para obtener el usuario por email
         switch (key) {

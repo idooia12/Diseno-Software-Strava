@@ -66,7 +66,7 @@ public class AuthorizationController {
                 boolean isAuthenticated = serviceGateway.login(email, password, key);
                 if (isAuthenticated) {
                     String token = authorizationService.generateToken(email);
-                    authorizationService.addUsuarioActivo(token, serviceGateway.getUsuarioByEmail(email, key));
+                    authorizationService.addUsuarioActivo(token, authorizationService.getUsuarioFromEmail(email));
                     return new ResponseEntity<>(token, HttpStatus.OK);
                 } else {
                     return new ResponseEntity<>("Credenciales inválidas", HttpStatus.UNAUTHORIZED);

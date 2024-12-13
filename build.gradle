@@ -25,7 +25,7 @@ dependencies {
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'    
     
     // Spring Boot Starter Data JPA for working with JPA and Hibernate
-        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     
     // H2 Database for in-memory database
 	runtimeOnly 'com.h2database:h2'	
