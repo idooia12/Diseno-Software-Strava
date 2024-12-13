@@ -1,6 +1,7 @@
 package Strava.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,20 @@ public class RetoService {
 	    retoRepository.save(reto); // Guardamos el reto si no hay duplicados
 	    return true;
 	}
+	
+	// Método para agregar una lista de retos
+    public List<RetoEntity> addAllRetos(List<RetoEntity> retos) {
+        List<RetoEntity> addedRetos = new ArrayList<>();
+        for (RetoEntity reto : retos) {
+            if (addReto(reto)) {
+                addedRetos.add(reto); // Agregamos el reto a la lista si se guardó exitosamente
+            } else {
+                // Aquí puedes manejar los retos duplicados si es necesario
+                System.out.println("El reto ya existe y no se guardó: " + reto.getNombre());
+            }
+        }
+        return addedRetos; // Devolvemos la lista de retos que se guardaron
+    }
 	
 	//Obtener progreso de usuario en un reto
 	public int getProgresoUsuario(UsuarioEntity usuario, RetoEntity reto) {
