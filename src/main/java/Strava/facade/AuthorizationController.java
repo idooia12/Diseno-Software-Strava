@@ -1,7 +1,6 @@
 package Strava.facade;
 
 import Strava.service.AuthorizationService;
-import Strava.gateway.ServiceGateway;
 import Strava.gateway.ServiceGatewayFactory;
 import Strava.gateway.ServiceGatewayInterface;
 import Strava.dao.*;
@@ -63,7 +62,7 @@ public class AuthorizationController {
                 ServiceGatewayInterface serviceGateway = serviceGatewayFactory.getServiceGateway(key);
 
                 // Realizamos la autenticación con el servicio
-                boolean isAuthenticated = serviceGateway.login(email, password, key);
+                boolean isAuthenticated = serviceGateway.login(email, password);
                 if (isAuthenticated) {
                     String token = authorizationService.generateToken(email);
                     authorizationService.addUsuarioActivo(token, authorizationService.getUsuarioFromEmail(email));

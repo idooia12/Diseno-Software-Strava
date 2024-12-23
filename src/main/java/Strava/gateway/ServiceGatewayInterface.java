@@ -1,10 +1,19 @@
 package Strava.gateway;
 
-import Strava.entity.UsuarioEntity;
 
 public interface ServiceGatewayInterface {
 
-    boolean validar(String email, String key);
-    boolean login(String email, String password, String key);
+	/*Método para validar que el mail esta registrado
+	 * @param email: mail del usuario
+     * @param key: Google o meta 
+     */
+    boolean validar(String email);
+    
+    /*Método para loguear al usuario
+     * @param email: mail del usuario
+     * @param password: contraseña del usuario
+     * @param key: Google o meta
+     */
+    boolean login(String email, String password);
     
 }

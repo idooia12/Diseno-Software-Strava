@@ -38,6 +38,7 @@ public class ServiceGatewayFactory {
      * @param servPort Puerto del servidor.
      * @param serviceKey Clave que indica el servicio ("META" o "GOOGLE").
      */
+    /*
     public void setInstance(String servIP, int servPort, String serviceKey) {
         switch (serviceKey.toUpperCase()) {
       //      case "GOOGLE":
@@ -50,6 +51,7 @@ public class ServiceGatewayFactory {
                 throw new IllegalArgumentException("Servicio no soportado: " + serviceKey);
         }
     }
+    */
 }
 
 

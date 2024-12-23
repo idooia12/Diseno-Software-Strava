@@ -1,4 +1,6 @@
-package Strava.gateway;
+//TODO Borrar clase
+
+/*package Strava.gateway;
 
 import Strava.entity.UsuarioEntity;
 import Strava.service.AuthorizationService;
@@ -82,4 +84,4 @@ public class ServiceGateway implements ServiceGatewayInterface {
                 throw new IllegalArgumentException("Unexpected service key: " + key);
         }
     }
-}
+}*/

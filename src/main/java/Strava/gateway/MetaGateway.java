@@ -4,7 +4,6 @@ package Strava.gateway;
 import org.springframework.stereotype.Component;
 
 import Strava.entity.UsuarioEntity;
-import Strava.service.AuthorizationService;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -19,11 +18,16 @@ public class MetaGateway implements ServiceGatewayInterface{
     private int serverPort = 9000;       // Cambia por el puerto real del servidor de Meta
     private final String DELIMITER = "#";
 
+    //TODO Esto no se usa en ningun momento, borrar 
+
+    /*
     public void setInstance(String servIP, int servPort, String key) {
         this.serverIP = servIP;
         this.serverPort = servPort;
         System.out.println("MetaGateway reconfigurado con IP: " + serverIP + " y puerto: " + serverPort);
     }
+    
+    */
 
     /**
      * Valida si un usuario está registrado en el sistema Meta.
@@ -31,7 +35,7 @@ public class MetaGateway implements ServiceGatewayInterface{
      * @param email El correo del usuario.
      * @return true si está registrado, false de lo contrario.
      */
-    public boolean validar(String email,String key) {
+    public boolean validar(String email) {
         String mensaje = "registrado" + DELIMITER + email;
         boolean resultado = false;
 
@@ -62,7 +66,7 @@ public class MetaGateway implements ServiceGatewayInterface{
      * @param password La contraseña del usuario.
      * @return true si las credenciales son válidas, false de lo contrario.
      */
-    public boolean login(String email, String password, String key) {
+    public boolean login(String email, String password) {
         String mensaje = "validar" + DELIMITER + email + DELIMITER + password;
         boolean resultado = false;
 
@@ -94,7 +98,7 @@ public class MetaGateway implements ServiceGatewayInterface{
     }
 
 
-    
+ 
     /**
      * Obtiene un usuario por su email desde el servidor Meta.
      * 
@@ -102,6 +106,7 @@ public class MetaGateway implements ServiceGatewayInterface{
      * @param key   La clave de autenticación.
      * @return Un objeto UsuarioEntity con la información del usuario.
      */
+    /*
     public UsuarioEntity getUsuarioByEmail(String email, String key) {
         String mensaje = "obtenerUsuario" + DELIMITER + email + DELIMITER + key;
         UsuarioEntity usuarioEntity = null;
@@ -139,7 +144,7 @@ public class MetaGateway implements ServiceGatewayInterface{
 
         return usuarioEntity;
     }
-
+*/
 
 
 
