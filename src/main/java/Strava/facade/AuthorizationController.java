@@ -4,6 +4,7 @@ import Strava.service.AuthorizationService;
 import Strava.gateway.ServiceGatewayFactory;
 import Strava.gateway.ServiceGatewayInterface;
 import Strava.dao.*;
+import Strava.entity.ServicioValidacion;
 import Strava.entity.UsuarioEntity;
 
 import java.util.Optional;
@@ -49,8 +50,7 @@ public class AuthorizationController {
     @PostMapping("/login")
     public ResponseEntity<String> login(
         @Parameter(description = "Correo electrónico del usuario", required = true) @RequestParam("Email") String email,
-        @Parameter(description = "Contraseña del usuario", required = true) @RequestParam("Password") String password,
-        @Parameter(description = "Clave del servicio (META/GOOGLE)", required = true) @RequestParam("ServiceKey") String key
+        @Parameter(description = "Contraseña del usuario", required = true) @RequestParam("Password") String password
     ) {
         try {
             // Comprobamos que el usuario esté en la base de datos
@@ -59,7 +59,8 @@ public class AuthorizationController {
                 return new ResponseEntity<>("Usuario no encontrado", HttpStatus.NOT_FOUND);
             } else {
                 // Obtenemos el servicio adecuado según el ServiceKey
-                ServiceGatewayInterface serviceGateway = serviceGatewayFactory.getServiceGateway(key);
+            	ServicioValidacion keyService = usuarioOpt.get().getServicio();
+                ServiceGatewayInterface serviceGateway = serviceGatewayFactory.getServiceGateway(keyService);
 
                 // Realizamos la autenticación con el servicio
                 boolean isAuthenticated = serviceGateway.login(email, password);

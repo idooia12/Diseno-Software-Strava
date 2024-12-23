@@ -2,6 +2,8 @@ package Strava.gateway;
 
 import org.springframework.stereotype.Component;
 
+import Strava.entity.ServicioValidacion;
+
 @Component
 public class ServiceGatewayFactory {
 
@@ -20,11 +22,11 @@ public class ServiceGatewayFactory {
      * @param serviceKey El string que indica el tipo de servicio ("META" o "GOOGLE").
      * @return El servicio seleccionado (MetaGateway o GoogleGateway).
      */
-    public ServiceGatewayInterface getServiceGateway(String serviceKey) {
-        switch (serviceKey.toUpperCase()) {
-            case "GOOGLE":
+    public ServiceGatewayInterface getServiceGateway(ServicioValidacion serviceKey) {
+        switch (serviceKey) {
+            case ServicioValidacion.Google:
                 return googleServiceGateway;  // Retorna la instancia de GoogleGateway
-            case "META":
+            case ServicioValidacion.Meta:
                 return metaServiceGateway;    // Retorna la instancia de MetaGateway
             default:
                 throw new IllegalArgumentException("Servicio no soportado: " + serviceKey);
