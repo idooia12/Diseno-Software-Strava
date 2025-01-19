@@ -9,6 +9,8 @@ import Strava.entity.UsuarioEntity;
 import Strava.service.AuthorizationService;
 import Strava.service.RetoService;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +33,8 @@ public class RetoController {
 
     private final RetoService retoService;
     private final AuthorizationService authorizationService;
-    
+    private static final Logger logger = LoggerFactory.getLogger(RetoController.class);
+
 	public RetoController(RetoService retoService, AuthorizationService authorizationService) {
 		this.retoService = retoService;
 		this.authorizationService = authorizationService;
@@ -135,28 +138,25 @@ public class RetoController {
                 @ApiResponse(responseCode = "500", description = "Error interno del servidor")
             }
         )
-    @PostMapping("/aceptar/{retoNombre}")
+    @PostMapping("/aceptar")
     public ResponseEntity<String> aceptarReto(
-    		 @Parameter(description = "Nombre del reto a aceptar", required = true, example = "Reto Maraton")
-             	@PathVariable String retoNombre,
-             @Parameter(description = "Token de autorización del usuario", required = true)
-             	@RequestParam("Token") String token) {
+    	@Parameter(description = "Token de autorización del usuario", required = true) @RequestParam("Token") String token,
+    	@Parameter(description = "Nombre del reto", required = true) @RequestParam("retoNombre") String retoNombre)
+              {
         try {
-            // Validar el token recibido y obtener el usuario
             UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
             if (usuario == null) {
-                // Si el token es inválido, devolver 401 Unauthorized
                 return new ResponseEntity<>("Token inválido", HttpStatus.UNAUTHORIZED);
             }
-
-            // Buscar el reto por nombre
+            logger.info("Aceptar Reto - Usuario: " + usuario.getEmail());
+            
             RetoEntity reto = buscarRetoPorNombre(retoNombre);
             if (reto == null) {
-                return new ResponseEntity<>("Reto no encontrado", HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>("Reto no encontrado: " + retoNombre, HttpStatus.NOT_FOUND);
             }
-
-            // Llamar al servicio para aceptar el reto
+            logger.info("Aceptar Reto - Reto: " + retoNombre);
             retoService.aceptarReto(usuario, reto);
+            logger.info("Reto Aceptado exitoso");
             return new ResponseEntity<>("Reto aceptado exitosamente", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>("Error interno del servidor", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -214,7 +214,7 @@ public class RetoController {
 
     private RetoEntity buscarRetoPorNombre(String nombre) {
         for (RetoEntity reto : retoService.getRetosActivos(new UsuarioEntity())) {
-            if (reto.getNombre().equalsIgnoreCase(nombre)) {
+        	if (reto.getNombre().equals(nombre)) {
                 return reto;
             }
         }

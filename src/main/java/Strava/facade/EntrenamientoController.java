@@ -39,7 +39,7 @@ public class EntrenamientoController {
         return authorizationService.validateToken(token);
     }
     
-
+     //Esta no va
     @Operation(
             summary = "Obtener entrenamientos",
             description = "Retorna la lista de todos los entrenamientos disponibles.",
@@ -73,7 +73,8 @@ public class EntrenamientoController {
     public ResponseEntity<String> crearEntrenamiento(
     		@Parameter(description = "Token de autorización", required = true) @RequestParam("Token") String token,
             @Parameter(description = "Título del entrenamiento", required = true) @RequestParam("Titulo") String titulo,
-            @Parameter(description = "Deporte del entrenamiento", required = true) @RequestParam("Deporte") String deporte,
+            @Parameter(description = "Deporte (ciclismo,running)", required = true) @RequestParam("Deporte") String deporte,
+            @Parameter(description = "Distancia(km)", required = true) @RequestParam("Distancia") int distancia,
             @Parameter(description = "Fecha de inicio del entrenamiento", required = true) @RequestParam("Fecha de Inicio") LocalDate fechaInicio,
             @Parameter(description = "Duración del entrenamiento (en minutos)", required = true) @RequestParam("Duracion") int duracion) {
         if (!validarToken(token)) {
@@ -89,7 +90,7 @@ public class EntrenamientoController {
                     usuario,
                     titulo,
                     Deporte.fromString(deporte),
-                    5,
+                    distancia,
                     fechaInicio,
                     LocalTime.now(),
                     duracion
@@ -107,7 +108,7 @@ public class EntrenamientoController {
         }
     }
 
-    
+    //Esta si
     @Operation(
             summary = "Listar entrenamientos",
             description = "Retorna una lista de entrenamientos en formato DTO.",
@@ -128,7 +129,8 @@ public class EntrenamientoController {
 
         try {
             // Obtener la lista de entidades de entrenamientos desde el servicio
-            List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.getAllEntrenamientos();
+            UsuarioEntity usuario = authorizationService.getUsuarioFromToken(token);
+        	List<SesionEntrenamientoEntity> entrenamientos = entrenamientoService.consultarUltimosEntrenamientos(usuario);
 
             // Convertir entidades a DTOs
             List<SesionEntrenamientoDTO> entrenamientosDTO = entrenamientos.stream()
