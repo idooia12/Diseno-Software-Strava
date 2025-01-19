@@ -27,11 +27,6 @@ public class DataInitializer {
        UsuarioEntity usuario2 = new UsuarioEntity("Ana@deusto.es", "Ana", "pass",LocalDate.of(2002, 1, 20), 55, 165, 175, 110, ServicioValidacion.Meta);
        UsuarioEntity usuario3 = new UsuarioEntity("Carlos@deusto.es", "Carlos", "pass", LocalDate.of(2024, 3, 15), 80, 175, 185, 125, ServicioValidacion.Google);
        
-       autorizacionService.addUsuario(usuario1);
-       autorizacionService.addUsuario(usuario2);
-       autorizacionService.addUsuario(usuario3);
-       logger.info("Usuarios guardados!");
-       
        // Crear retos
        RetoEntity reto1 = new RetoEntity("Reto Ciclismo de Resistencia",LocalDate.of(2024,12,10),LocalDate.of(2025,02,20), 200, Deporte.ciclismo, TipoDeReto.DISTANCIA);
        RetoEntity reto2 = new RetoEntity("Reto Running Semanal",LocalDate.of(2024,11,10),LocalDate.of(2024,11,17), 50, Deporte.running, TipoDeReto.TIEMPO);
@@ -43,9 +38,35 @@ public class DataInitializer {
        RetoEntity reto8 = new RetoEntity("Subida a la Montaña", LocalDate.of(2025,02,01), LocalDate.of(2025,02,28), 100, Deporte.ciclismo, TipoDeReto.TIEMPO);
        RetoEntity reto9 = new RetoEntity("Carrera 10K Virtual", LocalDate.of(2024,12,20), LocalDate.of(2024,12,25), 10, Deporte.running, TipoDeReto.DISTANCIA);
 
+       //Aceptar retos
+
+       usuario1.aceptarReto(reto9);
+       usuario1.aceptarReto(reto1);
+       usuario1.aceptarReto(reto2);
+       usuario1.aceptarReto(reto3);
+       usuario1.aceptarReto(reto4);
+       usuario1.aceptarReto(reto5);
+
+       usuario2.aceptarReto(reto6);
+       usuario2.aceptarReto(reto7);
+       usuario2.aceptarReto(reto8);
+       usuario2.aceptarReto(reto9);
+       usuario2.aceptarReto(reto1);
+
+       usuario3.aceptarReto(reto2);
+       usuario3.aceptarReto(reto3);
+       usuario3.aceptarReto(reto4);
+       usuario3.aceptarReto(reto5);
+       usuario3.aceptarReto(reto6);
+       
+       //Guardar usuarios y retos
+       autorizacionService.addUsuario(usuario1);
+       autorizacionService.addUsuario(usuario2);
+       autorizacionService.addUsuario(usuario3);
+       logger.info("Usuarios guardados!");
        retoService.addAllRetos(List.of(reto1, reto2, reto3, reto4, reto5, reto6, reto7, reto8, reto9));
        logger.info("Retos guardados!");
-
+       
        //Crear sesiones de entrenamiento
        entrenamientoService.crearEntrenamiento(usuario1, "Entrenamiento Matutino", Deporte.running, 10, LocalDate.of(2024,12,25), LocalTime.of(12,14), 60);
        entrenamientoService.crearEntrenamiento(usuario2, "Ruta de Montaña", Deporte.ciclismo, 25, LocalDate.of(2024,12,13), LocalTime.of(10,10), 120);
@@ -57,7 +78,6 @@ public class DataInitializer {
        entrenamientoService.crearEntrenamiento(usuario2, "Sesión de Resistencia", Deporte.running, 12, LocalDate.of(2025,1,18), LocalTime.of(6,15), 90);
 
        logger.info("Entrenamientos guardados!");
-       
         };  
 }
 }
